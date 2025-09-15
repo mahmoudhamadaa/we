@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Qustion Bank eng/mahmoud </title>
+    <title>Question Bank Eng/mahmoud</title>
+
   <style>
     * {
       box-sizing: border-box;
@@ -212,16 +213,26 @@
         font-size: 2em;
       }
     }
+    .image img {
+  max-width: 400px;   /* أقصى عرض */
+  max-height: 200px;  /* أقصى ارتفاع */
+  width: auto;        /* يخلي الصورة تحافظ على النسبة */
+  height: auto;
+  border-radius: 8px; /* يخلي الحواف ناعمة */
+  margin: 10px 0;     /* مسافة فوق وتحت */
+  display: block;
+}
+
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>🎯 بنك أسئلة FBB</h1>
+      <h1>🎯 بنك أسئلة </h1>
       <div class="search-container">
         <input type="text" id="searchInput" class="search-box" placeholder="🔍 ابحث في الأسئلة... (مثال: BLQ, voice down, physical instability)">
         <div class="stats">
-          <span id="questionCount">50</span>
+          <span id="questionCount"></span>
           <span>سؤال</span>
         </div>
       </div>
@@ -538,276 +549,439 @@
         options: ["A. Let customer check with another phone set and feed us back", "B. Transfer CST to fixed line Q", "C. Escalate Voice Down"],
         answer: "Escalate Voice Down"
       },
-      //     {
-      //   id: 51,
-      //   text: "SLA for Re-escalation Voice Down?",
-      //   options: ["A. 2 Days", "B. 1 Day", "C. 15 Days", "D. 10 Days"],
-      //   answer: "1 Day"
-      // },
-      // {
-      //   id: 52,
-      //   text: "SLA for Data Down Escalated to IU?",
-      //   options: ["A. 15 Days", "B. 2 Days", "C. 1 Day", "D. 10 Days"],
-      //   answer: "2 Days"
-      // },
-      // {
-      //   id: 53,
-      //   text: "SLA for Re-escalation Data Down Case?",
-      //   options: ["A. 2 Days", "B. 1 Day", "C. 10 Days", "D. 15 Days"],
-      //   answer: "2 Days"
-      // },
-      // {
-      //   id: 54,
-      //   text: "SLA for Data & Voice Down Case?",
-      //   options: ["A. 15 Days", "B. 2 Days", "C. 1 Day", "D. 10 Days"],
-      //   answer: "2 Days"
-      // },
-      // {
-      //   id: 55,
-      //   text: "SLA for Re-escalation Data & Voice Down?",
-      //   options: ["A. 15 Days", "B. 2 Days", "C. 1 Day", "D. 10 Days"],
-      //   answer: "2 Days"
-      // },
-      // {
-      //   id: 56,
-      //   text: "Second Time Escalation SLA for Data & Voice Down?",
-      //   options: ["A. 2 Days", "B. 1 Day", "C. 10 Days", "D. 15 Days"],
-      //   answer: "1 Day"
-      // },
-      // {
-      //   id: 57,
-      //   text: "Voice Down Case Escalated to IU?",
-      //   options: ["A. Open", "B. Waiting for Support", "C. Waiting for Research", "D. Resolved"],
-      //   answer: "Open"
-      // },
-      // {
-      //   id: 58,
-      //   text: "Re-escalation SLA for Voice Down Case?",
-      //   options: ["A. 2 Days", "B. 1 Day", "C. 10 Days", "D. 15 Days"],
-      //   answer: "1 Day"
-      // },
-      // {
-      //   id: 59,
-      //   text: "Second Time Escalation SLA for Voice Down Case?",
-      //   options: ["A. 2 Days", "B. 1 Day", "C. 10 Days", "D. 15 Days"],
-      //   answer: "1 Day"
-      // },
-      // {
-      //   id: 60,
-      //   text: "CPE stands for:",
-      //   options: ["A. Customer Provided Equipment", "B. Customer Premises Equipment", "C. Central Premises Equipment", "D. Communication Point Equipment"],
-      //   answer: "Customer Premises Equipment"
-      // },
-      // {
-      //   id: 61,
-      //   text: "SLA for Optimization Case?",
-      //   options: ["A. 15 Days", "B. 2 Days", "C. 5 Days", "D. 10 Days"],
-      //   answer: "5 Days"
-      // },
-      // {
-      //   id: 62,
-      //   text: "If CCA found that Customer’s speed recommendation not available on ASSIA?",
-      //   options: ["A. Act as not supported by Assia", "B. Change observation period then re-check", "C. Escalate to IU", "D. End the case"],
-      //   answer: "Change observation period then re-check"
-      // },
-      // {
-      //   id: 63,
-      //   text: "CCA should check voice verification before re-escalate any Physical Case except:",
-      //   options: ["A. WCAP case", "B. Data Down case", "C. Need Optimization case"],
-      //   answer: "Need Optimization case"
-      // },
-      // {
-      //   id: 64,
-      //   text: "Line code for ADSL2+:",
-      //   options: ["A. G-992-5", "B. G-992-2", "C. G-992-3"],
-      //   answer: "G-992-5"
-      // },
-      // {
-      //   id: 65,
-      //   text: "BLQ case Clear View Result After Search is “Technical dispatch is recommended”, after running Clear View result became “No DSL Physical Layer is detected”, CCA action?",
-      //   options: ["A. Escalate to IU", "B. Inform CST check with another CPE", "C. Check Diagnostic Tab in Line Details"],
-      //   answer: "Check Diagnostic Tab in Line Details"
-      // },
-      // {
-      //   id: 66,
-      //   text: "Second time Escalation SLA in BLQ case?",
-      //   options: ["A. 2 Days", "B. 1 Day", "C. 3 Days"],
-      //   answer: "1 Day"
-      // },
-      // {
-      //   id: 67,
-      //   text: "CST has ticket “Need Optimization” escalated at 10:00 PM and CST calling again at 11:30 PM same day, CCA action?",
-      //   options: ["A. Inform CST waiting follow-up call", "B. Create delay ticket and inform CST 1 hour", "C. Inform CST waiting SLA"],
-      //   answer: "Create delay ticket and inform CST 1 hour"
-      // },
-      // {
-      //   id: 68,
-      //   text: "BLQ TKT with update “done”, CST called after 2 days and informed update is fake. CCA action?",
-      //   options: ["A. Re-troubleshoot case with CST", "B. Inform CST that someone will follow with him", "C. Escalate TKT to IU direct with mention CST input"],
-      //   answer: "Escalate TKT to IU direct with mention CST input"
-      // },
-      // {
-      //   id: 69,
-      //   text: "If CST belongs to North Sinai, re-escalation after 3rd level update, line is cabin and operational speed is 2M, CCA action?",
-      //   options: ["A. Escalate BLQ", "B. Stop escalation & inform CST with script", "C. Escalate to Pilot SLS"],
-      //   answer: "Escalate BLQ"
-      // },
-      // {
-      //   id: 70,
-      //   text: "Right Path to get “Bad Line Quality” topic from wiki?",
-      //   options: ["A. Front Line - Physical Cases - Bad Line Quality Cases - BLQ", "B. Front Line - Physical Cases - Physical Instability Cases - BLQ", "C. Sales ADSL - Physical Cases - Physical Instability Cases - Physical Instability"],
-      //   answer: "Front Line - Physical Cases - Physical Instability Cases - BLQ"
-      // },
-      // {
-      //   id: 71,
-      //   text: "BLQ escalated to IU with status:",
-      //   options: ["A. Waiting for Support", "B. Waiting for Research", "C. Open"],
-      //   answer: "Open"
-      // },
-      // {
-      //   id: 72,
-      //   text: "In case CST suffering BLQ and during troubleshooting CCA found Voice is down, action?",
-      //   options: ["A. Escalate BLQ-Voice Down", "B. Escalate BLQ case", "C. Escalate Voice Down and mention CST has BLQ issue"],
-      //   answer: "Escalate Voice Down and mention CST has BLQ issue"
-      // },
-      // {
-      //   id: 73,
-      //   text: "It’s not mandatory to inform CST to leave CPE power ON while escalating Need Optimization case. True / False",
-      //   options: ["True", "False"],
-      //   answer: "False"
-      // },
-      // {
-      //   id: 74,
-      //   text: "In case Service Recommendation Speed not available on ASSIA, CCA action?",
-      //   options: ["A. Act as not supported by Assia", "B. Change observation period then re-check", "C. Check Attainable Speed"],
-      //   answer: "Change observation period then re-check"
-      // },
-      // {
-      //   id: 75,
-      //   text: "In 3Com Router, ADSL LED named:",
-      //   options: ["A. Auth", "B. SYNC", "C. Link"],
-      //   answer: "SYNC"
-      // },
-      // {
-      //   id: 76,
-      //   text: "In BLQ Case, when make SELT, CCA must inform CST to disconnect RJ11 from CPE. True / False",
-      //   options: ["True", "False"],
-      //   answer: "True"
-      // },
-      // {
-      //   id: 77,
-      //   text: "CCA shouldn’t inform CST with Ticket ID. True / False",
-      //   options: ["True", "False"],
-      //   answer: "False"
-      // },
-      // {
-      //   id: 78,
-      //   text: "Case “Voice not working + ADSL LED blinking/off + no logs” should be handled as:",
-      //   options: ["A. Voice Down", "B. Data Down", "C. Data & Voice Down"],
-      //   answer: "Data & Voice Down"
-      // },
-      // {
-      //   id: 79,
-      //   text: "SLA for 2nd time escalation Voice & Data Down?",
-      //   options: ["A. 2 Days", "B. 1 Day", "C. 3 Days"],
-      //   answer: "1 Day"
-      // },
-      // {
-      //   id: 80,
-      //   text: "BLQ SLA First Escalation?",
-      //   options: ["A. 2 Days", "B. 1 Day", "C. 3 Days"],
-      //   answer: "2 Days"
-      // },
-      // {
-      //   id: 81,
-      //   text: "In case customer has speed issue and optimization is needed, SLA is:",
-      //   options: ["A. 15 Days", "B. 2 Days", "C. 5 Days"],
-      //   answer: "5 Days"
-      // },
-      // {
-      //   id: 82,
-      //   text: "Voice Down escalation status at IU?",
-      //   options: ["A. Waiting for Support", "B. Waiting for Research", "C. Open"],
-      //   answer: "Open"
-      // },
-      // {
-      //   id: 83,
-      //   text: "Escalation path for “Need Optimization” case?",
-      //   options: ["A. Escalate to IU", "B. Escalate to Optimization Team", "C. Escalate to Pilot"],
-      //   answer: "Escalate to Optimization Team"
-      // },
-      // {
-      //   id: 84,
-      //   text: "In case CST suffers Data Down + during troubleshooting Voice found Down too → action?",
-      //   options: ["A. Escalate Data Down only", "B. Escalate Voice Down only", "C. Escalate Data & Voice Down"],
-      //   answer: "Escalate Data & Voice Down"
-      // },
-      // {
-      //   id: 85,
-      //   text: "When escalation is done, CCA must:",
-      //   options: ["A. Inform CST with SLA", "B. End call", "C. Wait for update"],
-      //   answer: "Inform CST with SLA"
-      // },
-      // {
-      //   id: 86,
-      //   text: "Right status for Optimization case at IU?",
-      //   options: ["A. Waiting for Research", "B. Waiting for Support", "C. Open"],
-      //   answer: "Waiting for Research"
-      // },
-      // {
-      //   id: 87,
-      //   text: "If CCA finds customer has “Need Optimization” → must inform CST to keep:",
-      //   options: ["A. Mobile ON", "B. Laptop ON", "C. CPE (Router) ON"],
-      //   answer: "CPE (Router) ON"
-      // },
-      // {
-      //   id: 88,
-      //   text: "Path to find “Need Optimization” on Wiki?",
-      //   options: ["A. Front Line → Physical Cases → Optimization", "B. Front Line → Voice Cases → Optimization", "C. Sales → Optimization"],
-      //   answer: "Front Line → Physical Cases → Optimization"
-      // },
-      // {
-      //   id: 89,
-      //   text: "For BLQ, if SELT shows “Fail”, CCA must:",
-      //   options: ["A. Escalate BLQ", "B. Close Case", "C. Escalate Voice"],
-      //   answer: "Escalate BLQ"
-      // },
-      // {
-      //   id: 90,
-      //   text: "SLA for 1st time Escalation Voice Down?",
-      //   options: ["A. 2 Days", "B. 1 Day", "C. 3 Days"],
-      //   answer: "1 Day"
-      // },
-      // {
-      //   id: 91,
-      //   text: "If CST from Sinai, line is cabin, speed 2M, BLQ case → action?",
-      //   options: ["A. Escalate BLQ", "B. Stop Escalation", "C. Escalate Voice"],
-      //   answer: "Escalate BLQ"
-      // },
-      // {
-      //   id: 92,
-      //   text: "CPE stands for:",
-      //   options: ["A. Customer Premises Equipment", "B. Customer Provided Equipment", "C. Communication Point Equipment"],
-      //   answer: "Customer Premises Equipment"
-      // },
-      // {
-      //   id: 93,
-      //   text: "Ticket ID must be given to CST?",
-      //   options: ["A. Yes", "B. No"],
-      //   answer: "Yes"
-      // },
-      // {
-      //   id: 94,
-      //   text: "If BLQ escalated to IU, ticket status should be:",
-      //   options: ["A. Waiting for Research", "B. Waiting for Support", "C. Open"],
-      //   answer: "Open"
-      // },
-      // {
-      //   id: 95,
-      //   text: "CCA must inform CST to disconnect RJ11 during SELT test?",
-      //   options: ["True", "False"],
-      //   answer: "True"
-      // }
+      {
+  id: 51,
+  text: "BLQ TKT with the below update and CST called us after 2 days from update and informed that this update is fake and no one called him, CCA Right Action:",
+    image: "./1.png",
+  options: [
+    "A. Escalate TKT to IU direct with mention CST input",
+    "B. Re-Troubleshoot case with CST",
+    "C. Inform CST that someone will follow with him"
+  ],
+  answer: "Escalate TKT to IU direct with mention CST input"
+},
+{
+  id: 52,
+  text: "CST complain from BLQ case and CCA found below error in ADF Tool, CCA Right action:",
+    image: "./2.png",
+  options: [
+    "A. follow voice verification",
+    "B. Escalate TKT to IU",
+    "C. Act according to major fault process and inform cst SLA 5 Days"
+  ],
+  answer: "Act according to major fault process and inform cst SLA 5 Days",
+
+},
+{
+  id: 53,
+  text: "CST has BLQ case Clear View output (No DSL Physical Layer Issue Is Detected), NO Faults Exist, Line is very stable, service recommendation speed more than Current Sync Rate CCA will handle case as:",
+  image: "",
+  options: [
+    "A. Need Optimization",
+    "B. BLQ",
+    "C. Slowness"
+  ],
+  answer: "Need Optimization"
+},
+{
+  id: 54,
+  text: "CST has ticket Need Optimization escalated at 10.00 PM and CST calling at 11.30 pm in the same day CCA Right action:",
+  image: "",
+  options: [
+    "A. Inform cst waiting follow up call",
+    "B. Create delay ticket and inform cst 1 hour",
+    "C. Inform cst waiting SLA"
+  ],
+  answer: "Create delay ticket and inform cst 1 hour"
+},
+{
+  id: 55,
+  text: "If CST belong to north Sinai and need to re-escalation after 3rd level update, line is cabin and operational speed is 2 M, CCA Right Action:",
+  image: "",
+  options: [
+    "A. Escalate BLQ",
+    "B. CCA will stop escalation and inform customer with script",
+    "C. Escalate to pilot SLS"
+  ],
+  answer: "Escalate BLQ"
+},
+{
+  id: 56,
+  text: "BLQ first time escalation SLA:",
+  image: "",
+  options: [
+    "A. 1 day",
+    "B. 3 days",
+    "C. 2 days"
+  ],
+  answer: "1 day"
+},
+{
+  id: 57,
+  text: "While T.S with CST BLQ Case, ASSIA clear view result is as the below, CCA Right action:",
+  image: "./3.jpg",
+  options: [
+    "A. Escalate to IU",
+    "B. Connect from main",
+    "C. Inform customer to wait 3 days until tests done on the line (Inform customer to leave CPE on during the 3 days)"
+  ],
+  answer: "Inform customer to wait 3 days until tests done on the line (Inform customer to leave CPE on during the 3 days)"
+},
+{
+  id: 58,
+  text: "BLQ case Clear View Result After Search is (Technical dispatch is recommended), and after running Clear View result became (No DSL Physical Layer is detected), CCA Right action is:",
+  image: "",
+  options: [
+    "A. Check Diagnostic Tab in Line Details",
+    "B. Inform CST check with another CPE",
+    "C. Escalate to IU"
+  ],
+  answer: "Check Diagnostic Tab in Line Details"
+},
+{
+  id: 59,
+  text: "Before escalating Data Down case CCA should follow voice verification:",
+  image: "",
+  options: [
+    "True",
+    "False"
+  ],
+  answer: "True"
+},
+{
+  id: 60,
+  text: "SLA for Data Down case:",
+  image: "",
+  options: [
+    "A. 2 days",
+    "B. 1 day",
+    "C. 1 hour"
+  ],
+  answer: "1 day"
+},
+{
+  id: 61,
+  text: "If CST has Data Down case and ADSL led became up after SELT CCA Right action:",
+  image: "",
+  options: [
+    "A. Run ASSIA Clear then check real time result",
+    "B. Escalate to IU",
+    "C. Inform CST with solvent"
+  ],
+  answer: "Run ASSIA Clear then check real time result"
+},
+{
+  id: 62,
+  text: "During the maintenance visit, Technician Should check the internal wiring or Change CPE:",
+  image: "",
+  options: [
+    "True",
+    "False"
+  ],
+  answer: "False"
+},
+{
+  id: 63,
+  text: "CST complain from internet not working and during T.S CCA found that there are 5 logs exist during last 12 hours and no log during last 3 hours CCA will handle case as:",
+  image: "",
+  options: [
+    "A. Data Down",
+    "B. Physical Instability"
+  ],
+  answer: "Data Down"
+},
+{
+  id: 64,
+  text: "SLA for Data and voice down TKT:",
+  image: "",
+  options: [
+    "A. 1 hour",
+    "B. 1 day",
+    "C. 2 hours"
+  ],
+  answer: "1 day"
+},
+{
+  id: 65,
+  text: "While escalating Data Down case CCA should inform customer with ticket ID:",
+  image: "",
+  options: [
+    "True",
+    "False"
+  ],
+  answer: "True"
+},
+{
+  id: 66,
+  text: "we can get Data down case from WIKI using tree:",
+  image: "",
+  options: [
+    "A. Technical > Advanced support team > physical cases > Data Down cases",
+    "B. Technical > Front line > logical cases > Data Down cases",
+    "C. Technical > Front line > physical cases > Data Down cases"
+  ],
+  answer: "Technical > Front line > physical cases > Data Down cases"
+},
+{
+  id: 67,
+  text: "While escalating physical instability case CCA should check voice verification?",
+  image: "",
+  options: [
+    "a. FALSE",
+    "b. TRUE"
+  ],
+  answer: "TRUE"
+},
+{
+  id: 68,
+  text: "CCA must Ask customer for 2 mobiles numbers while escalating Physical Instability case:",
+  image: "",
+  options: [
+    "a. FALSE",
+    "b. TRUE"
+  ],
+  answer: "TRUE"
+},
+{
+  id: 69,
+  text: "In case has Physical Instability Contradiction and we are waiting customer 2 min without responding and CCA ended the call​​ .. Right SR Will be …",
+  image: "",
+  options: [
+    "a. FBB Tech Problem - Physical Instability Contradiction - no respond from customers side for 1 Min",
+    "b. FBB Tech Problem - Physical Instability Contradiction - no respond from customers side for 2 Min",
+    "c. FBB Tech Problem - Physical Instability - no respond from customers side for 2 Min"
+  ],
+  answer: "FBB Tech Problem - Physical Instability Contradiction - no respond from customers side for 2 Min"
+},
+{
+  id: 70,
+  text: "Customer has ticket physical instability in IU , CST called us on 17/2/2025 at 5:15 PM to follow on his problem , Right SR is :",
+  image: "./4.png",
+  options: [
+    "a. FBB Tech Problem > Physical Instability > Follow Up",
+    "b. FBB Tech Problem > Physical Instability Contradiction > Follow Up",
+    "c. FBB Tech Problem > Physical Instability > Follow up After SLA"
+  ],
+  answer: "FBB Tech Problem > Physical Instability > Follow Up"
+},
+{
+  id: 71,
+  text: "In Case CST has physical instability TKT and has this update and on 18/2/2025, CST called us and informed us he didn't get visit, CCA Action will be:",
+  image: "./5.png",
+  options: [
+    "a. re-escalate the ticket to IU with updating the customer's input",
+    "b. Re-T.S again",
+    "c. inform CST to check with another CPE"
+  ],
+  answer: "re-escalate the ticket to IU with updating the customer's input"
+},
+{
+  id: 72,
+  text: "CST has physical instability case, ASSIA result was: CST connected from main wire direct, and CST has no Faults in ASSIA. What is your action?",
+  image: "./7.png",
+  options: [
+    "a. Escalate TKT direct to IU",
+    "b. Inform CST about faults and check availability to remove it",
+    "c. Follow voice verification and escalate TKT"
+  ],
+  answer: "Follow voice verification and escalate TKT"
+},
+{
+  id: 73,
+  text: "While troubleshooting physical instability, Clear View Result after performing test was as shown in the image. What is the next action?",
+  image: "./6.png",
+  options: [
+    "A. Check connection type",
+    "B. Run Clear View within 24H",
+    "C. Follow Logical instability case"
+  ],
+  answer: "Follow Logical instability case"
+},
+{
+  id: 74,
+  text: "CST called us complaining from internet not stable. After searching on ASSIA Tool by Account number, we found that ADSL LED status is 'UP' while service is Down. What is the next step?",
+  image: "./8.png",
+  options: [
+    "A. Connection Type",
+    "B. Handle as Logical Instability",
+    "C. Check Duration of stability"
+  ],
+  answer: "Handle as Logical Instability"
+},
+{
+  id: 75,
+  text: "In case customer asked to change main wire as it’s not long enough, what is the CCA right action?",
+  image: "",
+  options: [
+    "A. Direct CST to CSO",
+    "B. Inform the customer that this is not available.",
+    "C. Escalate voice down with following the normal escalation process"
+  ],
+  answer: "Escalate voice down with following the normal escalation process"
+},
+{
+  id: 76,
+  text: "You can escalate a voice down case even for a Suspended account or Suspended package as long as there is no cancellation order.",
+  image: "",
+  options: [
+    "True",
+    "False"
+  ],
+  answer: "True"
+},
+{
+  id: 77,
+  text: "Voice down case will be escalated to IU with which Status?",
+  image: "",
+  options: [
+    "A. Waiting for customer",
+    "B. Open",
+    "C. Closed"
+  ],
+  answer: "Open"
+},
+{
+  id: 78,
+  text: "Second time and above escalation SLA for voice down case, what should be informed to customer?",
+  image: "",
+  options: [
+    "A. 12 Hours",
+    "B. 2 Days",
+    "C. 1 Day"
+  ],
+  answer: "1 Day"
+},
+{
+  id: 79,
+  text: "Which tool can you get CST landline bill if CST migrated to BSS?",
+  image: "",
+  options: [
+    "A. CPM",
+    "B. OSS",
+    "C. BSS"
+  ],
+  answer: "BSS"
+},
+{
+  id: 80,
+  text: "The customer called from a different ADSL number and has a voice down problem. After checking: BSS FV status: active, package status: active, package resources: consumed, package type is prepaid, and voice status is receiving only. What is the CCA right action?",
+  image: "",
+  options: [
+    "A. Check if Line TDM",
+    "B. Escalate to IU",
+    "C. Inform customer that the line became receiving only and can't make a call until renewal due to all units consumed"
+  ],
+  answer: "Inform customer that the line became receiving only and can't make a call until renewal due to all units consumed"
+},
+{
+  id: 81,
+  text: "Customer is calling from Different ADSL number, BSS FV status: Active, package status: Active, package resources: Not Consumed, subscription type: FV customer (Voice Only), FV status on CST360 from FV profile shown in the image. What’s the next step?",
+  image: "./9.png",
+  options: [
+    "A. Remove Temp Suspension from CST360",
+    "B. Inform CST to wait 1 hour",
+    "C. Check Voice Status"
+  ],
+  answer: "Remove Temp Suspension from CST360"
+},
+{
+  id: 82,
+  text: "SLA for Re-escalation Voice Down?",
+  image: "",
+  options: [
+    "A. 3 Days",
+    "B. 1 Day",
+    "C. 2 Days"
+  ],
+  answer: "1 Day"
+},
+{
+  id: 83,
+  text: "In case CCA escalate ticket to IU, SLA will be:",
+  image: "",
+  options: [
+    "A. 2 H",
+    "B. 1 D",
+    "C. 2 D"
+  ],
+  answer: "1 D"
+},
+{
+  id: 84,
+  text: "Ticket Wrong Card and Port second escalation will be escalated to:",
+  image: "",
+  options: [
+    "A. Second level Advanced",
+    "B. IU Maintenance",
+    "C. Pilot-Follow Up"
+  ],
+  answer: "IU Maintenance"
+},
+{
+  id: 85,
+  text: "CST needs Technical Visit. What is the right TT?",
+  image: "",
+  options: [
+    "A. Broadband->Technical->ADSL/VDSL->I Care->Technical Visit",
+    "B. Broadband->NON-Technical->ADSL/VDSL->Creator->Technical Visit",
+    "C. Broadband->Technical->ADSL/VDSL->Creator->Installation Visit"
+  ],
+  answer: "Broadband->Technical->ADSL/VDSL->I Care->Technical Visit"
+},
+{
+  id: 86,
+  text: "CST called you with WCAP and at the same time has voice down. What is your action?",
+  image: "",
+  options: [
+    "A. Escalate WCAP and mention the Voice problem",
+    "B. Escalate Voice problem and mention the WCAP problem",
+    "C. Escalate WCAP problem only"
+  ],
+  answer: "Escalate Voice problem and mention the WCAP problem"
+},
+{
+  id: 87,
+  text: "Customer Follow up escalated ticket (Wrong Card and Port) and the TKT is still within SLA. What is the right SR?",
+  image: "",
+  options: [
+    "A. FBB Tech Problem > Wrong Card and Port > Follow up After SLA",
+    "B. FBB Tech Problem > Wrong Card and Port > Follow Up",
+    "C. FBB Tech Problem > Wrong Card and Port > Re Escalation"
+  ],
+  answer: "FBB Tech Problem > Wrong Card and Port > Follow Up"
+},
+{
+  id: 88,
+  text: "Technical Visits fees will be without VAT:",
+  image: "",
+  options: [
+    "A. 75 L.E and the technician will take the money from the CST during the visit",
+    "B. 75 L.E and will be added on the monthly bill.",
+    "C. 85 L.E and will be added on the monthly bill."
+  ],
+  answer: "75 L.E and will be added on the monthly bill."
+},
+{
+  id: 89,
+  text: "Way of Communication for Technical Visit will be call only?",
+  image: "",
+  options: [
+    "True",
+    "False"
+  ],
+  answer: "True"
+},
+{
+  id: 90,
+  text: "Way of communication for Wrong Card and Port?",
+  image: "",
+  options: [
+    "A. Call or SMS",
+    "B. Call or SMS or Recorded message",
+    "C. Phone call"
+  ],
+  answer: "Call or SMS or Recorded message"
+},
 
     ];
 
@@ -835,17 +1009,25 @@
       noResults.style.display = 'none';
 
       container.innerHTML = questionsToRender.map(q => `
-        <div class="card">
-          <div class="qnum">السؤال ${q.id}</div>
-          <div class="qtext">${highlightText(q.text, searchTerm)}</div>
-          <div class="options">
-            ${q.options.map(opt => `<div>${highlightText(opt, searchTerm)}</div>`).join('')}
-          </div>
-          <div class="answer">الإجابة الصحيحة: ${highlightText(q.answer, searchTerm)}</div>
-        </div>
+       <div class="card">
+  <div class="qnum">السؤال ${q.id}</div>
+  <div class="qtext">${highlightText(q.text, searchTerm)}</div>
+
+  ${q.image ? `<div class="image" ><img src="${q.image}" alt="Question Image" ></div>` : ''}
+
+  <div class="options">
+    ${q.options.map(opt => `<div>${highlightText(opt, searchTerm)}</div>`).join('')}
+  </div>
+
+  <div class="answer">الإجابة الصحيحة: ${highlightText(q.answer, searchTerm)}</div>
+</div>
+
       `).join('');
     }
+    const totalQuestions = questions.length;
 
+    // طباعته أعلى الصفحة
+    document.getElementById("questionCount").innerText = "عدد الأسئلة: " + totalQuestions;
     function filterQuestions() {
       const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
       const questionCount = document.getElementById('questionCount');
