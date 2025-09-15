@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بنك الأسئلة - FBB مع البحث</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body { 
+      font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 0; 
+      padding: 20px; 
+      min-height: 100vh;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .header h1 {
+      color: white;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .search-container {
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .search-box {
+      flex: 1;
+      max-width: 600px;
+      padding: 15px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 50px;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(4px);
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    
+    .search-box:focus {
+      background: white;
+      box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+      transform: translateY(-2px);
+    }
+    
+    .stats {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.9);
+      padding: 10px 20px;
+      border-radius: 25px;
+      color: #333;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .container { 
+      max-width: 1400px; 
+      margin: 0 auto; 
+    }
+    
+    .questions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .card { 
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px; 
+      padding: 25px; 
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(31, 38, 135, 0.5);
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+    
+    .qnum { 
+      font-weight: 900; 
+      color: #4f46e5;
+      font-size: 18px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .qnum::before {
+      content: '❓';
+      font-size: 20px;
+    }
+    
+    .qtext { 
+      margin-bottom: 15px; 
+      line-height: 1.6;
+      color: #374151;
+      font-size: 16px;
+    }
+    
+    .options { 
+      margin: 15px 0;
+      padding: 15px;
+      background: rgba(243, 244, 246, 0.7);
+      border-radius: 12px;
+    }
+    
+    .options div { 
+      margin: 8px 0;
+      padding: 8px 12px;
+      background: white;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+    }
+    
+    .options div:hover {
+      background: #f8fafc;
+      border-left-color: #667eea;
+      transform: translateX(5px);
+    }
+    
+    .answer { 
+      background: linear-gradient(90deg, #059669, #065f46);
+      color: white;
+      font-weight: 700; 
+      padding: 12px 18px;
+      border-radius: 12px;
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .answer::before {
+      content: '✅';
+      font-size: 18px;
+    }
+    
+    .no-results {
+      text-align: center;
+      color: white;
+      font-size: 24px;
+      margin-top: 50px;
+      padding: 40px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .highlight {
+      background: yellow;
+      font-weight: bold;
+      border-radius: 3px;
+      padding: 2px 4px;
+    }
+    
+    @media (max-width: 768px) {
+      .questions-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .search-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .stats {
+        order: -1;
+      }
+      
+      body {
+        padding: 10px;
+      }
+      
+      .header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎯 بنك أسئلة FBB</h1>
+      <div class="search-container">
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 ابحث في الأسئلة... (مثال: BLQ, voice down, physical instability)">
+        <div class="stats">
+          <span id="questionCount">95</span>
+          <span>سؤال</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="questions-grid" id="questionsContainer">
+      <!-- الأسئلة ستظهر هنا -->
+    </div>
+    
+    <div class="no-results" id="noResults" style="display: none;">
+      😔 لم يتم العثور على أسئلة مطابقة لبحثك
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        id: 1,
+        text: "CST has BLQ case Clear View output (No DSL Physical Layer Issue Is Detected), NO Faults Exist, Line is very stable, service recommendation speed more than Current Sync Rate CCA will handle case as:",
+        options: ["A. Slowness", "B. BLQ", "C. Need Optimization"],
+        answer: "Need Optimization"
+      },
+      {
+        id: 2,
+        text: "Fees for Maintenance Visit:",
+        options: ["A. 75 L.E With VAT", "B. For Free", "C. 75 L.E Without VAT"],
+        answer: "For Free"
+      },
+      {
+        id: 3,
+        text: "In case customer paid his bill and active on BSS but line is suspended on CST 360 FV profile \"from port details\", after remove temp suspension problem not solved CCA right action",
+        options: ["A. Escalate voice down", "B. Inform the customer to wait 1 hour from remove temp suspension action", "C. Follow with customer normal troubleshooting"],
+        answer: "Inform the customer to wait 1 hour from remove temp suspension action"
+      },
+      {
+        id: 4,
+        text: "while you follow physical instability with cst and there is major fault in ADF Tool like picture Your action is",
+        options: ["A. Act according to major fault process with attach screenshot from major fault message on SR", "B. Check if Cst Supported by Assia Or not", "C. Follow voice verification and escalate TKT"],
+        answer: "Act according to major fault process with attach screenshot from major fault message on SR"
+      },
+      {
+        id: 5,
+        text: "From TTS Tool CCA can know any update from third level pool as a below by pressing on:",
+        options: ["A. Item logs", "B. Advanced logs", "C. Support pool"],
+        answer: "Item logs"
+      },
+      {
+        id: 6,
+        text: "Right Path to get (bad line quality) topic from wiki:",
+        options: ["A. Front Line - Physical Cases - Physical Instability Cases - BLQ", "B. Sales ADSL - Physical Cases - Physical Instability Cases - Physical Instability", "C. Front Line - Physical Cases - bad line quality Cases - BLQ"],
+        answer: "Front Line - Physical Cases - Physical Instability Cases - BLQ"
+      },
+      {
+        id: 7,
+        text: "When you Escalate WCAP TKT for first time SLA Will be:",
+        options: ["A. 1 D", "B. 2 D", "C. 1WD"],
+        answer: "1 D"
+      },
+      {
+        id: 8,
+        text: "line like the below, FV status in BSS : Active and the line type is: TDM , CCA right action will be made adjust status?",
+        options: ["True", "False"],
+        answer: "True"
+      },
+      {
+        id: 9,
+        text: "Technical Visit can be for down customers?",
+        options: ["True", "False"],
+        answer: "False"
+      },
+      {
+        id: 10,
+        text: "CCA must inform customer with ticket number while escalating Physical Instability case:",
+        options: ["True", "False"],
+        answer: "True"
+      },
+      {
+        id: 11,
+        text: "The customer called from a different ADSL number and has a voice down problem. After checking: BSS FV status: active, package status: active, package resources: consumed, his package type is prepaid and his voice status is receiving only, CCA right Action?",
+        options: ["A. Escalate to IU", "B. Inform customer that the line became receiving only and can't make a call until renewal due to all units consumed", "C. Check if Line TDM"],
+        answer: "Inform customer that the line became receiving only and can't make a call until renewal due to all units consumed"
+      },
+      {
+        id: 12,
+        text: "While Escalate Ticket WCAP to IU , TTS status will be:",
+        options: ["A. Waiting for research", "B. Waiting for response", "C. Open"],
+        answer: "Open"
+      },
+      {
+        id: 13,
+        text: "In Case WCAP case solved after cst connect from main , So the right SR:",
+        options: ["A. FBB Tech Problem>Wrong Card & port>Solved after connected from main", "B. FBB Tech Problem>Wrong Card and port>IU-Resplitted", "C. FBB Tech Problem>Wrong Card and port>Not Wrong Card and Port"],
+        answer: "FBB Tech Problem>Wrong Card & port>Solved after connected from main"
+      },
+      {
+        id: 14,
+        text: "Cst has physical instability TKT with this IU update and cst called us complaining from the same issue, CST Supported By ASSIA , After connecting from main and run Assia Result was (like below picture) Your Action",
+        options: ["A. Re-Escalate the Ticket to IU Pool", "B. Re-Troubleshoot as \"Physical Instability Not Supported By ASSIA\"", "C. Inform customer that our system shows now that he has no instability problem"],
+        answer: "Re-Escalate the Ticket to IU Pool"
+      },
+      {
+        id: 15,
+        text: "while troubleshooting physical instability , Clear View Result After perform test like below ,, next action is:",
+        options: ["A. Run Clear View within 24H", "B. Follow Logical instability case", "C. Check connection type"],
+        answer: "Follow Logical instability case"
+      },
+      {
+        id: 16,
+        text: "In case of customer is calling us and suffering from BLQ and during the troubleshooting, CCA found that Voice is down, CCA Right Action:",
+        options: ["A. Escalate BLQ-Voice Down", "B. Escalate BLQ case", "C. Escalate Voice down and mention that CST has BLQ issue"],
+        answer: "Escalate Voice down and mention that CST has BLQ issue"
+      },
+      {
+        id: 17,
+        text: "while troubleshooting physical instability, connection type : wall outlet , the next step is:",
+        options: ["A. Check splitter existence before cpe", "B. Connect from main wire", "C. Check if connection Right or Wrong"],
+        answer: "Check if connection Right or Wrong"
+      },
+      {
+        id: 18,
+        text: "CST complain from internet not working and during T.S CCA found that there are 5 logs exist during last 12 hours and no log during last 3 hours CCA will handle case as:",
+        options: ["A. Physical Instability", "B. Data Down"],
+        answer: "Data Down"
+      },
+      {
+        id: 19,
+        text: "BLQ TKT with the below update and CST called us after 2 days from update and informed that this update is fake and no one called him, CCA Right Action:",
+        options: ["A. Escalate TKT to IU direct with mention CST input", "B. Re-Troubleshoot case with CST", "C. Inform CST that someone will follow with him"],
+        answer: "Escalate TKT to IU direct with mention CST input"
+      },
+      {
+        id: 20,
+        text: "Way of communication while escalating Need Optimization Case:",
+        options: ["A. Call Only", "B. SMS Only", "C. Call or SMS or Recorded message"],
+        answer: "Call or SMS or Recorded message"
+      },
+      {
+        id: 21,
+        text: "CST has BLQ ticket with update (working from exchange) without visit update, CCA Right action:",
+        options: ["A. inform CST that the problem solved", "B. Re-escalate case to IU pool", "C. Re-Troubleshoot BLQ"],
+        answer: "Re-escalate case to IU pool"
+      },
+      {
+        id: 22,
+        text: "It's mandatory in Data and Voice Down to keep CPE turned on:",
+        options: ["True", "False"],
+        answer: "False"
+      },
+      {
+        id: 23,
+        text: "Customer has ticket physical instability in IU , CST called us on 17/2/2025 at 5:15 PM to follow on his problem , Right SR is:",
+        options: ["A. FBB Tech Problem > Physical Instability Contradiction > Follow Up", "B. FBB Tech Problem > Physical Instability > Follow Up", "C. FBB Tech Problem > Physical Instability > Follow up After SLA"],
+        answer: "FBB Tech Problem > Physical Instability > Follow Up"
+      },
+      {
+        id: 24,
+        text: "Cst called you and ADSL led in CPE is: UP , and Cst 360 port operational Status is UP, and while you make restart port ADSL led status didn't match so Cst problem will be",
+        options: ["A. Data Down", "B. Wrong card and port", "C. Physical instability"],
+        answer: "Wrong card and port"
+      },
+      {
+        id: 25,
+        text: "In case the customer paid his landline bills in receiving period and voice not working (there is no sending and receiving), CCA should follow the normal troubleshooting steps and escalate the case if needed:",
+        options: ["True", "False"],
+        answer: "True"
+      },
+      {
+        id: 26,
+        text: "In Data Down case the line will be obtained IP:",
+        options: ["True", "False"],
+        answer: "False"
+      },
+      {
+        id: 27,
+        text: "CCA shouldn't inform customer with ticket ID:",
+        options: ["True", "False"],
+        answer: "False"
+      },
+      {
+        id: 28,
+        text: "Selt result as a below CCA Right Action:",
+        options: ["A. Check Connection Type", "B. Inform CST to try with another CPE", "C. Escalate to IU"],
+        answer: "Check Connection Type"
+      },
+      {
+        id: 29,
+        text: "Voice overlapping case will be escalated to:",
+        options: ["A. SLS", "B. IU Maintenance", "C. Follow Up"],
+        answer: "IU Maintenance"
+      },
+      {
+        id: 30,
+        text: "While escalating Data Down case CCA should inform customer with ticket ID:",
+        options: ["True", "False"],
+        answer: "True"
+      },
+      {
+        id: 31,
+        text: "Customer is following up with us, and has voice down problem case escalated as the below and CST calling us 5/4/2025 (6:00 pm) right SR:",
+        options: ["A. FBB Tech Problem- Voice Down - Follow Up", "B. FBB Tech Problem- Voice overlapping - Follow Up", "C. FBB Tech Problem - Voice Down - After SLA"],
+        answer: "FBB Tech Problem- Voice Down - Follow Up"
+      },
+      {
+        id: 32,
+        text: "Ticket Wrong Card and Port second escalation will be escalate to:",
+        options: ["A. Second level Advanced", "B. Pilot-Follow Up", "C. IU Maintenance"],
+        answer: "IU Maintenance"
+      },
+      {
+        id: 33,
+        text: "TKT Data Down with the below update and CST called us after 2 days from update, CA Right Action:",
+        options: ["A. Escalate TKT to IU direct", "B. Inform CST that someone will follow with him", "C. Re-Troubleshoot Case with customer"],
+        answer: "Re-Troubleshoot Case with customer"
+      },
+      {
+        id: 34,
+        text: "We can check POP outage existence from:",
+        options: ["A. CST 360", "B. BSS", "C. Matrix"],
+        answer: "CST 360"
+      },
+      {
+        id: 35,
+        text: "In physical instability contradiction if System up time and DSL up time in HDM Tool as below picture and the same time customer didn't disconnect CPE or electricity down, CCA Action:",
+        options: ["A. TS as data down", "B. this mean that ADSL not stable and check NST condition", "C. Inform customer that our system shows now that ADSL stable and Troubleshoot as logical instability"],
+        answer: "this mean that ADSL not stable and check NST condition"
+      },
+      {
+        id: 36,
+        text: "CST called us and complained that service working but unstable and within the call Power led disconnected in his cpe, Your action:",
+        options: ["A. Follow Data Down with cst", "B. Follow Power Failure with cst", "C. Follow physical instability with cst"],
+        answer: "Follow Power Failure with cst"
+      },
+      {
+        id: 37,
+        text: "CST has BLQ ticket with update below, line supported by Assia, CST didn't change anything after technician visit's, After re-run the appropriate mode of Clear View Analysis Result Technician Dispatch, CCA Right action:",
+        options: ["A. Re-T. S BLQ case again", "B. Re-Escalate the Ticket to IU Pool", "C. Escalate Need Optimization case"],
+        answer: "Re-Escalate the Ticket to IU Pool"
+      },
+      {
+        id: 38,
+        text: "If CST has Power Failure which of the following you Should do with CST:",
+        options: ["A. Inform CST to buy new CPE", "B. Direct CST To CSO without any T.S", "C. Ask CST if Original adapter is used or not"],
+        answer: "Ask CST if Original adapter is used or not"
+      },
+      {
+        id: 39,
+        text: "In case customer requests to change main wire without any technical problem, CCA should Escalate TKT normally:",
+        options: ["True", "False"],
+        answer: "False"
+      },
+      {
+        id: 40,
+        text: "what the meaning of clear view result after search NO dsl physical layer issue is detected like this picture:",
+        options: ["A. As per ASSIA observation the cst has to change cpe", "B. As per Assia observation the cst problem physical", "C. As per ASSIA observation the cst problem not physical"],
+        answer: "As per ASSIA observation the cst problem not physical"
+      },
+      {
+        id: 41,
+        text: "Cst has Ticket Data Down with Update (Morkzat), So CCA will Inform cst with SLA:",
+        options: ["A. 2 Days", "B. 3 Days", "C. No estimated time"],
+        answer: "3 Days"
+      },
+      {
+        id: 42,
+        text: "CST complain from BLQ case and CCA found below error in ADF Tool, CCA Right action:",
+        options: ["A. Act according to major fault process and inform cst SLA 5 Days", "B. Escalate TKT to IU", "C. follow voice verification"],
+        answer: "Act according to major fault process and inform cst SLA 5 Days"
+      },
+      {
+        id: 43,
+        text: "Power Failure means:",
+        options: ["A. Power led not existed", "B. Power led not working or working with red color", "C. Power led working normally"],
+        answer: "Power led not working or working with red color"
+      },
+      {
+        id: 44,
+        text: "CST has physical instability Issue and in the same time has voice down CCA action will be:",
+        options: ["A. Escalate physical instability + Voice down TT", "B. Escalate Voice down TT + Mention Troubleshooting In TTS Logs", "C. Escalate physical instability TT"],
+        answer: "Escalate Voice down TT + Mention Troubleshooting In TTS Logs"
+      },
+      {
+        id: 45,
+        text: "while troubleshooting physical instability, Clear View Result After Search was like this picture, next action is:",
+        options: ["A. Escalate to IU", "B. Check connection type", "C. Check last fix date according to TTS and customer input at same time"],
+        answer: "Check connection type"
+      },
+      {
+        id: 46,
+        text: "In Case Customer follow on his ticket Within SLA for Re-escalated ticket, So the right SR:",
+        options: ["A. FBB tech problem > wrong card & port > follow up after re-escalation - within sla", "B. FBB tech problem > wrong card & port > follow up after re-escalation - after sla", "C. FBB Tech Problem > Wrong Card & port > Re Escalation"],
+        answer: "FBB tech problem > wrong card & port > follow up after re-escalation - within sla"
+      },
+      {
+        id: 47,
+        text: "Cst has Ticket WCAP in IU Pool and TKT Passed SLA, So CCA will inform cst SLA:",
+        options: ["A. 1WD", "B. 1 D", "C. 2 D"],
+        answer: "1 D"
+      },
+      {
+        id: 48,
+        text: "CCA should inform CST to leave CPE turned on while escalating BLQ case?",
+        options: ["True", "False"],
+        answer: "False"
+      },
+      {
+        id: 49,
+        text: "If CST has Data and Voice Down case and after connecting from main wall outlet problem solved CCA Right Action:",
+        options: ["A. Inform CST with solvent and Ideal Connection", "B. Inform CST to change splitter", "C. Create TT for internal wiring"],
+        answer: "Inform CST with solvent and Ideal Connection"
+      },
+      {
+        id: 50,
+        text: "CST has noise problem not related to physical issue and hasn't cordless phone set CCA action will be:",
+        options: ["A. Let customer check with another phone set and feed us back", "B. Transfer CST to fixed line Q", "C. Escalate Voice Down"],
+        answer: "Escalate Voice Down"
+      }
+    ];
+
+    let filteredQuestions = [...questions];
+
+    function highlightText(text, search) {
+      if (!search) return text;
+      const regex = new RegExp(`(${search})`, 'gi');
+      return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    function renderQuestions(questionsToRender) {
+      const container = document.getElementById('questionsContainer');
+      const noResults = document.getElementById('noResults');
+      const searchInput = document.getElementById('searchInput');
+      const searchTerm = searchInput.value;
+
+      if (questionsToRender.length === 0) {
+        container.style.display = 'none';
+        noResults.style.display = 'block';
+        return;
+      }
+
+      container.style.display = 'grid';
+      noResults.style.display = 'none';
+
+      container.innerHTML = questionsToRender.map(q => `
+        <div class="card">
+          <div class="qnum">السؤال ${q.id}</div>
+          <div class="qtext">${highlightText(q.text, searchTerm)}</div>
+          <div class="options">
+            ${q.options.map(opt => `<div>${highlightText(opt, searchTerm)}</div>`).join('')}
+          </div>
+          <div class="answer">الإجابة الصحيحة: ${highlightText(q.answer, searchTerm)}</div>
+        </div>
+      `).join('');
+    }
+
+    function filterQuestions() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+      const questionCount = document.getElementById('questionCount');
+
+      if (!searchTerm) {
+        filteredQuestions = [...questions];
+      } else {
+        filteredQuestions = questions.filter(q => 
+          q.text.toLowerCase().includes(searchTerm) ||
+          q.options.some(opt => opt.toLowerCase().includes(searchTerm)) ||
+          q.answer.toLowerCase().includes(searchTerm)
+        );
+      }
+
+      questionCount.textContent = filteredQuestions.length;
+      renderQuestions(filteredQuestions);
+    }
+
+    // البحث المباشر
+    document.getElementById('searchInput').addEventListener('input', filterQuestions);
+    
+    // عرض جميع الأسئلة في البداية
+    renderQuestions(questions);
+  </script>
+</body>
+</html>
