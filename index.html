@@ -1,249 +1,483 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question Bank Eng/mahmoud</title>
-
+  <title>Professional Question Bank - Technical Assessment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-color: #4f46e5;
+      --success-color: #10b981;
+      --text-primary: #1f2937;
+      --text-secondary: #6b7280;
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-glass: rgba(255, 255, 255, 0.1);
+      --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.1);
+      --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.15);
+      --border-radius: 16px;
+      --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     
     body { 
-      font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      margin: 0; 
-      padding: 20px; 
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--primary-gradient);
       min-height: 100vh;
+      padding: 20px;
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+    
+    .background-decoration {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
     
     .header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
+      animation: slideDown 0.8s ease-out;
     }
     
     .header h1 {
       color: white;
-      font-size: 2.5em;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      letter-spacing: -0.02em;
     }
     
-    .search-container {
+    .header .subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 30px;
+    }
+    
+    .search-section {
       position: sticky;
       top: 20px;
       z-index: 100;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
+      animation: slideUp 0.8s ease-out 0.2s both;
+    }
+    
+    .search-container {
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 20px;
       flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      max-width: 600px;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 20px;
+      z-index: 2;
     }
     
     .search-box {
-      flex: 1;
-      max-width: 600px;
-      padding: 15px 20px;
-      font-size: 18px;
+      width: 100%;
+      padding: 18px 20px 18px 55px;
+      font-size: 16px;
+      font-weight: 500;
       border: none;
       border-radius: 50px;
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-      backdrop-filter: blur(4px);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-soft);
       outline: none;
-      transition: all 0.3s ease;
+      transition: var(--transition);
+      color: var(--text-primary);
+    }
+    
+    .search-box::placeholder {
+      color: var(--text-secondary);
+      font-weight: 400;
     }
     
     .search-box:focus {
       background: white;
-      box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+      box-shadow: var(--shadow-hover);
       transform: translateY(-2px);
     }
     
-    .stats {
+    .stats-card {
       display: flex;
       align-items: center;
-      gap: 10px;
-      background: rgba(255,255,255,0.9);
-      padding: 10px 20px;
-      border-radius: 25px;
-      color: #333;
-      font-weight: bold;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 16px 24px;
+      border-radius: 50px;
+      color: var(--text-primary);
+      font-weight: 600;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+      white-space: nowrap;
     }
     
-    .container { 
-      max-width: 1400px; 
-      margin: 0 auto; 
+    .stats-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .stats-number {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 14px;
     }
     
     .questions-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 30px;
+      animation: fadeIn 1s ease-out 0.4s both;
     }
     
-    .card { 
-      background: rgba(255,255,255,0.95);
-      border-radius: 20px; 
-      padding: 25px; 
-      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      transition: all 0.3s ease;
+    .question-card { 
+      background: var(--bg-card);
+      border-radius: var(--border-radius);
+      padding: 32px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
       position: relative;
       overflow: hidden;
+      animation: slideUp 0.6s ease-out both;
     }
     
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(31, 38, 135, 0.5);
+    .question-card:nth-child(even) {
+      animation-delay: 0.1s;
     }
     
-    .card::before {
+    .question-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .question-card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 4px;
-      background: linear-gradient(90deg, #667eea, #764ba2);
+      background: var(--primary-gradient);
     }
     
-    .qnum { 
-      font-weight: 900; 
-      color: #4f46e5;
-      font-size: 18px;
-      margin-bottom: 15px;
+    .question-number { 
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      font-weight: 700; 
+      color: var(--accent-color);
+      font-size: 18px;
+      margin-bottom: 20px;
     }
     
-    .qnum::before {
-      content: '❓';
-      font-size: 20px;
-    }
-    
-    .qtext { 
-      margin-bottom: 15px; 
-      line-height: 1.6;
-      color: #374151;
-      font-size: 16px;
-    }
-    
-    .options { 
-      margin: 15px 0;
-      padding: 15px;
-      background: rgba(243, 244, 246, 0.7);
-      border-radius: 12px;
-    }
-    
-    .options div { 
-      margin: 8px 0;
-      padding: 8px 12px;
-      background: white;
+    .question-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--primary-gradient);
       border-radius: 8px;
-      transition: all 0.2s ease;
-      border-left: 3px solid transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      flex-shrink: 0;
     }
     
-    .options div:hover {
+    .question-text { 
+      margin-bottom: 24px; 
+      line-height: 1.7;
+      color: var(--text-primary);
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    .question-image {
+      margin: 20px 0;
+      text-align: center;
+    }
+    
+    .question-image img {
+      max-width: 100%;
+      max-height: 300px;
+      width: auto;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      transition: var(--transition);
+    }
+    
+    .question-image img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+    }
+    
+    .options-container { 
+      margin: 24px 0;
+      padding: 24px;
+      background: rgba(248, 250, 252, 0.8);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .option { 
+      margin: 12px 0;
+      padding: 14px 18px;
+      background: white;
+      border-radius: 10px;
+      transition: var(--transition);
+      border-left: 4px solid transparent;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .option:hover {
       background: #f8fafc;
-      border-left-color: #667eea;
-      transform: translateX(5px);
+      border-left-color: var(--accent-color);
+      transform: translateX(8px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
     
-    .answer { 
-      background: linear-gradient(90deg, #059669, #065f46);
+    .option::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
+      background: rgba(79, 70, 229, 0.05);
+      transition: width 0.3s ease;
+    }
+    
+    .option:hover::before {
+      width: 100%;
+    }
+    
+    .answer-section { 
+      background: linear-gradient(135deg, var(--success-color), #059669);
       color: white;
       font-weight: 700; 
-      padding: 12px 18px;
+      padding: 18px 24px;
       border-radius: 12px;
-      margin-top: 15px;
+      margin-top: 24px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
     }
     
-    .answer::before {
-      content: '✅';
-      font-size: 18px;
+    .answer-icon {
+      width: 24px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
     }
     
     .no-results {
       text-align: center;
       color: white;
       font-size: 24px;
-      margin-top: 50px;
-      padding: 40px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
+      font-weight: 600;
+      margin-top: 80px;
+      padding: 60px 40px;
+      background: var(--bg-glass);
+      border-radius: var(--border-radius);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeIn 0.6s ease-out;
+    }
+    
+    .no-results-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      opacity: 0.7;
     }
     
     .highlight {
-      background: yellow;
-      font-weight: bold;
-      border-radius: 3px;
-      padding: 2px 4px;
+      background: linear-gradient(120deg, #fef3c7, #fcd34d);
+      color: #92400e;
+      font-weight: 700;
+      border-radius: 4px;
+      padding: 2px 6px;
+      box-shadow: 0 2px 4px rgba(252, 211, 77, 0.3);
+    }
+    
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
     
     @media (max-width: 768px) {
+      body {
+        padding: 15px;
+      }
+      
       .questions-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
       }
       
       .search-container {
         flex-direction: column;
-        align-items: center;
+        gap: 15px;
       }
       
-      .stats {
+      .search-wrapper {
+        max-width: 100%;
+      }
+      
+      .stats-card {
         order: -1;
+        width: 100%;
+        justify-content: center;
       }
       
-      body {
-        padding: 10px;
+      .question-card {
+        padding: 24px;
       }
       
       .header h1 {
-        font-size: 2em;
+        font-size: 2.5rem;
       }
     }
-    .image img {
-  max-width: 400px;   /* أقصى عرض */
-  max-height: 200px;  /* أقصى ارتفاع */
-  width: auto;        /* يخلي الصورة تحافظ على النسبة */
-  height: auto;
-  border-radius: 8px; /* يخلي الحواف ناعمة */
-  margin: 10px 0;     /* مسافة فوق وتحت */
-  display: block;
-}
-
+    
+    @media (max-width: 480px) {
+      .questions-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .question-card {
+        padding: 20px;
+      }
+      
+      .search-box {
+        padding: 16px 18px 16px 50px;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="background-decoration"></div>
+  
   <div class="container">
-    <div class="header">
-      <h1>🎯 بنك أسئلة </h1>
+    <header class="header">
+      <h1>🎯 Professional Question Bank</h1>
+      <p class="subtitle">Technical Assessment & Knowledge Base</p>
+    </header>
+
+    <section class="search-section">
       <div class="search-container">
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 ابحث في الأسئلة... (مثال: BLQ, voice down, physical instability)">
-        <div class="stats">
-          <span id="questionCount"></span>
-          <span>سؤال</span>
+        <div class="search-wrapper">
+          <div class="search-icon">🔍</div>
+          <input type="text" id="searchInput" class="search-box" 
+                 placeholder="Search questions, options, or answers... (e.g., BLQ, voice down, physical instability)">
+        </div>
+        
+        <div class="stats-card">
+          <span class="stats-number" id="questionCount">0</span>
+          <span>Questions</span>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="questions-grid" id="questionsContainer">
-      <!-- الأسئلة ستظهر هنا -->
-    </div>
+    <main class="questions-grid" id="questionsContainer">
+      <!-- Questions will be rendered here -->
+    </main>
     
     <div class="no-results" id="noResults" style="display: none;">
-      😔 لم يتم العثور على أسئلة مطابقة لبحثك
+      <div class="no-results-icon">🔍</div>
+      <div>No questions found matching your search</div>
+      <p style="margin-top: 10px; font-size: 16px; opacity: 0.8;">Try different keywords or check your spelling</p>
     </div>
   </div>
 
@@ -982,10 +1216,1019 @@
   ],
   answer: "Call or SMS or Recorded message"
 },
+{
+  id: 91,
+  text: "In Case this Cst don't pay land line bill line will be barring for..",
+  image: "",
+  options: [],
+  answer: "5 day"
+},
+{
+  id: 92,
+  text: "Cst asked about WE Ardy 35 price SR will be......",
+  image: "",
+  options: [],
+  answer: "Fixed Voice SR Inquiry - Rate plan-We 35"
+},
+{
+  id: 93,
+  text: "For FV Cst: Consumption priority for Telephonet Cst is.....",
+  image: "",
+  options: [],
+  answer: "Main Package then Extra Package"
+},
+{
+  id: 94,
+  text: "Cst has ........days after subscription to complete installation new line if not installed Order will be cancelled.",
+  image: "",
+  options: [],
+  answer: "60 days"
+},
+{
+  id: 95,
+  text: "While Create Check availability request (CCA) not mark on Voice and Data so, cst can Subscribe on:",
+  image: "",
+  options: [],
+  answer: "Voice only"
+},
+{
+  id: 96,
+  text: "Cst Calling us to follow up on his check availability request so, CCA right action is ....?",
+  image: "",
+  options: [],
+  answer: "Modify order to renew his check availability request"
+},
+{
+  id: 97,
+  text: "Cst has follow up on his FV order and passed SLA so, CCA right action is: (FV MSAN new subscriber)",
+  image: "",
+  options: [],
+  answer: "Create TT and inform Cat SLA48WH"
+},
+{
+  id: 98,
+  text: "If Cst has suspended on BSS with this reason, that's mean: (suspension Administrative distraint)",
+  image: "",
+  options: [],
+  answer: "Cst has Violated Contract Rules and not inform WE"
+},
+{
+  id: 99,
+  text: "If cst has suspended on BSS with this reason, that's mean: (Suspend Customer Request)",
+  image: "",
+  options: [],
+  answer: "Cst request to suspend his account"
+},
+{
+  id: 100,
+  text: "In Case cst need to add FV VAS CCA should inform cst:",
+  image: "",
+  options: [],
+  answer: "All of them"
+},
+{
+  id: 101,
+  text: "In Case check availability result was (Not available and survey status: started). That mean.....",
+  image: "",
+  options: [],
+  answer: "Automatic survey request will be sent to measurement team"
+},
+{
+  id: 102,
+  text: "Landline delivery is available for any exchange in all Gov",
+  image: "",
+  options: [],
+  answer: "False"
+},
+{
+  id: 103,
+  text: "In Case this Cst don't pay land line bill next status will be......",
+  image: "",
+  options: [],
+  answer: "barring"
+},
+{
+  id: 104,
+  text: "Cst has ......... days available to complete his subscribe after received SMS.",
+  image: "",
+  options: [],
+  answer: "14 days"
+},
+{
+  id: 105,
+  text: "How many times cst Can Modify his check availability Request based on his request for free?",
+  image: "",
+  options: [],
+  answer: "2 times"
+},
+{
+  id: 106,
+  text: "Cst follow up on his FV order and has (Automatic TT - FV-installation Voice - Unreachable) so, CCA right action is.....?",
+  image: "",
+  options: [],
+  answer: "Forward TT to your BSS user and close it to move order to next activity"
+},
+{
+  id: 107,
+  text: "What is the first activity for FV order?",
+  image: "",
+  options: [],
+  answer: "MSAN network activation"
+},
+{
+  id: 108,
+  text: "Cst from Giza and need to subscribe on new FV line (MSAN) will inform him SLA",
+  image: "",
+  options: [],
+  answer: "5 Days"
+},
+{
+  id: 109,
+  text: "PONR if cst need to Cancel FV installation order (MSAN)",
+  image: "",
+  options: [],
+  answer: "IM Update"
+},
+{
+  id: 110,
+  text: "SLA for Cancel & refund the amount within the installation cycle will be....",
+  image: "",
+  options: [],
+  answer: "2WD"
+},
+{
+  id: 111,
+  text: "Cst subscribe on WE Ardy 75 so, Cst can make Calls for.......... from his package.",
+  image: "",
+  options: [],
+  answer: "Local, national WE mobile and other mobile"
+},
+{
+  id: 112,
+  text: "Cst Can add (Extra mobile 25) Package in Landline number even if has these add ons:",
+  image: "",
+  options: [],
+  answer: "False"
+},
+{
+  id: 113,
+  text: "Cst has Complaint from Voice not working after paid through any channel & the Corrective action taken from our store and his account still suspended on BSS with this reason, CCA right action is......",
+  image: "",
+  options: [],
+  answer: "Create TT: fixed voice administrative - distraint - administrative distraint Resumption"
+},
+{
+  id: 114,
+  text: "While cst is following on this request but not complaint.........SR will be.",
+  image: "",
+  options: [],
+  answer: "Fixed voice SR follow up-check availability - Not available"
+},
+{
+  id: 115,
+  text: "Salfny service for FV line it contains:",
+  image: "",
+  options: [],
+  answer: "40 units"
+},
+{
+  id: 116,
+  text: "Cst Calling us and asked to cancel his Landline number but in same time cst subscribe in internet with another Company. So, CCA right action:",
+  image: "",
+  options: [],
+  answer: "Refer Cst to his ISP to Cancel internet firstly and back to Cancel Landline number"
+},
+{
+  id: 117,
+  text: "In Case Cst has issue in any FV VAS, CCA right action:",
+  image: "",
+  options: [],
+  answer: "Troubleshoot with cst if not solved will Create TT"
+},
+{
+  id: 118,
+  text: "This message means that: 'This service number has another FBB subscriber'",
+  image: "",
+  options: [],
+  answer: "This number has internet account with us"
+},
+{
+  id: 119,
+  text: "In Case cst has check availability request and chose (other), (CCA Can modify order to add landline number in same building.",
+  image: "",
+  options: [],
+  answer: "TRUE"
+},
+{
+  id: 120,
+  text: "In case cst check availability request is not available and Survey finished so, the cst request will avail to modify for:",
+  image: "",
+  options: [],
+  answer: "2 years"
+},
+{
+  id: 121,
+  text: "Cst subscribe on WE Ardy 35 so, Cst Can Make calls for.........from his package.",
+  image: "",
+  options: [],
+  answer: "Local and national only"
+},
+{
+  id: 122,
+  text: "Cst follow up on this FV installation order CCA right action:-",
+  image: "",
+  options: [],
+  answer: "Inform cst normal SLA in case of delay Create TT"
+},
+{
+  id: 123,
+  text: "Cst Calling us asking about service to protect his Landline phone from stolen, CCA will offer... to the cst?",
+  image: "",
+  options: [],
+  answer: "Call Barring"
+},
+{
+  id: 124,
+  text: "Cst from (Aswan) calling us asked about SLA for new subscription (TDM line), CCA will inform cst with:",
+  image: "",
+  options: [],
+  answer: "5 days"
+},
+{
+  id: 125,
+  text: "CCA should check voice verification before re-escalate any Physical Case except…………………?",
+  image: "",
+  options: [],
+  answer: "Need Optimization case"
+},
+{
+  id: 126,
+  text: "2:Line code for ADSL2+:",
+  image: "",
+  options: [],
+  answer: "G-992-5"
+},
+{
+  id: 127,
+  text: "BLQ case Clear View Result After Search is (Technical dispatch is recommended), and after running Clear View result became (No DSL Physical Layer is detected), CCA Right action is:",
+  image: "",
+  options: [],
+  answer: "Check Diagnostic Tab in Line Details"
+},
+{
+  id: 128,
+  text: "Second time Escalation SLA in BLQ case:",
+  image: "",
+  options: [],
+  answer: "1 Day"
+},
+{
+  id: 129,
+  text: "CST has ticket Need Optimization escalated at 10.00 PM and CST calling at 11.30 pm in the same day CCA Right action:",
+  image: "",
+  options: [],
+  answer: "Create delay ticket and inform cst 1 hour"
+},
+{
+  id: 130,
+  text: "BLQ TKT with the below update and CST called us after 2 days from update and informed that this update is fake and no one called him, CCA Right Action: => customer refuse visit-Refused entry",
+  image: "(img 6)",
+  options: [],
+  answer: "Escalate TKT to IU direct with mention CST input"
+},
+{
+  id: 131,
+  text: "If CST belong to north Sinai and need to re-escalation after 3rd level update, line is cabin and operational speed is 2 M, CCA Right Action:",
+  image: "",
+  options: [],
+  answer: "Escalate BLQ"
+},
+{
+  id: 132,
+  text: "Right Path to get (bad line quality) topic from wiki:",
+  image: "",
+  options: [],
+  answer: "Front Line - Physical Cases - Physical Instability Cases - BLQ"
+},
+{
+  id: 133,
+  text: "BLQ escalated to IU with status…….",
+  image: "",
+  options: [],
+  answer: "Open"
+},
+{
+  id: 134,
+  text: "In case of customer is calling us and suffering from BLQ and during the troubleshooting, CCA found that Voice is down,CCA Right Action:",
+  image: "",
+  options: [],
+  answer: "Escalate Voice down and mention that CST has BLQ issue"
+},
+{
+  id: 135,
+  text: "It’s not mandatory to inform CST to leave the CPE power turned on while escalating Need Optimization case",
+  image: "",
+  options: [],
+  answer: "False"
+},
+{
+  id: 136,
+  text: "In case of service recommendation speed Not avail on Assia CCA Right action:",
+  image: "",
+  options: [],
+  answer: "Change observation period then re-Check"
+},
+{
+  id: 137,
+  text: "In 3 Com Router ADSL LED Named………….",
+  image: "",
+  options: [],
+  answer: "SYNC"
+},
+{
+  id: 138,
+  text: "In BLQ Case, when make selt CCA must inform cst to disconnect RJ 11 from cpe",
+  image: "",
+  options: [],
+  answer: "True"
+},
+{
+  id: 139,
+  text: " CCA shouldn’t inform customer with ticket ID",
+  image: "",
+  options: [],
+  answer: "False"
+},
+{
+  id: 140,
+  text: "right path get (Bad line quality) topic from wiki ",
+  image: "",
+  options: [],
+  answer: "front Line - physical cases - physical instability case - BLQ"
+},
+{
+  id: 141,
+  text: "CCA should attach screen shot from [CST360]/[Matrix for TDM] (Attainable & configured Speed) in case not supported by Assia",
+  image: "",
+  options: [],
+  answer: "TRUE"
+},
+{
+  id: 142,
+  text: "in BLQ Case when make selt CCA must inform CST to disconnect RJ 11 from cpe",
+  image: "",
+  options: [],
+  answer: " True"
+},
+{
+  id: 143,
+  text: "it's not mandatory to inform CST to leave the CPE power turned on while escalating need optimization case ",
+  image: "",
+  options: [],
+  answer: "FALSE"
+},
+{
+  id: 144,
+  text: "CST has need optimization ticket .. escalated at 5:00 pm and CST call us at 5:30 pm CCA will create SR...",
+  image: "",
+  options: [],
+  answer: "FBB tech problem - need optimization - follow Up"
+},
+{
+  id: 145,
+  text: "while T.S with CST BLQ case , ASSIA clear view result is as the below , CCA Right action:",
+  image: "(img 22)",
+  options: [],
+  answer: "Assure that port is not disabled and Re-Run the test again"
+},
+{
+  id: 146,
+  text: "CCA shouldn't inform customer with ticket ID",
+  image: "",
+  options: [],
+  answer: "FALSE"
+},
+{
+  id: 147,
+  text: "CST has BLQ case Clear View output (No DSL Physical Layer Issue Is Detected), NO Faults Exist, Line is very stable, service recommendation speed more than Current Sync Rate CCA will handle case as:",
+  image: "",
+  options: [],
+  answer: "Need optimization"
+},
+{
+  id: 148,
+  text: "In case of service recommendation speed Not avail on Assia CCA Right action:",
+  image: "",
+  options: [],
+  answer: "Change observation period then re-check"
+},
+{
+    id: 149,
+    text: "CCA Can Make SR or TT By choosing …",
+    image: "",
+    options: [],
+    answer: "Create Service Request",
+},
+{
+    id: 150,
+    text: "WO Request problems might be …?",
+    image: "",
+    options: [],
+    answer: "All of the above",
+},
+{
+    id: 151,
+    text: "What is the current price of the available router?",
+    image: "",
+    options: [],
+    answer: "1710 with VAT",
+},
+{
+    id: 152,
+    text: "change CST package with lower amount within installation period Can Do from",
+    image: "",
+    options: [],
+    answer: "111 & CSO",
+},
+{
+    id: 153,
+    text: "If CST is eligible for (door to door) , your action",
+    image: "",
+    options: [],
+    answer: "create TT",
+},
+{
+    id: 154,
+    text: "Verification Rules if CST calling from Landline and need early renewal ....",
+    image: "",
+    options: [],
+    answer: "No verification",
+},
+{
+    id: 155,
+    text: "Any customer can subscribe on Option Pack service now",
+    image: "",
+    options: [],
+    answer: "TRUE",
+},
+{
+    id: 156,
+    text: "Can CST receive his CPE at the time of contracting without having to return to the branch again ?",
+    image: "",
+    options: [],
+    answer: "TRUE",
+},
+{
+    id: 157,
+    text: "CST can make Early renewal for Super 20 GB",
+    image: "",
+    options: [],
+    answer: "FALSE",
+},
+{
+    id: 158,
+    text: "Start speed for Super up to 30 is",
+    image: "",
+    options: [],
+    answer: "8 Mbps",
+},
+{
+    id: 159,
+    text: "From which tool agent can make SR&TT",
+    image: "",
+    options: [],
+    answer: "BSS",
+},
+{
+    id: 160,
+    text: "Way of subscription to internet service is",
+    image: "",
+    options: [],
+    answer: "Branches",
+},
+{
+    id: 161,
+    text: "From which availablity for new subscription for internet",
+    image: "",
+    options: [],
+    answer: "CST 360",
+},
+{
+    id: 162,
+    text: "CST can't change anything inside the WE life package, but can move to another WE life package?",
+    image: "",
+    options: [],
+    answer: "True",
+},
+{
+    id: 163,
+    text: "............ is up to 100M ?",
+    image: "",
+    options: [],
+    answer: "Ultra",
+},
+{
+    id: 164,
+    text: "Optimizing speed Duration for super 2 speed (600GB)",
+    image: "",
+    options: [],
+    answer: "4D",
+},
+{
+    id: 165,
+    text: "Which of those package is Corporate Individual?",
+    image: "",
+    options: [],
+    answer: "Corporate superspeed 1-(140GB)",
+},
+{
+    id: 166,
+    text: "Line problem SLA..",
+    image: "",
+    options: [],
+    answer: "15 WD",
+},
+{
+    id: 167,
+    text: "From which tool CCA can check Outage",
+    image: "",
+    options: [],
+    answer: "CST 360",
+},
+{
+    id: 168,
+    text: "Order in DSL check compo Activity and CST's port was combo , the next activity is",
+    image: "",
+    options: [],
+    answer: "Network Activation",
+},
+{
+    id: 169,
+    text: "Change CST package with High amount within installation period can be done from",
+    image: "",
+    options: [],
+    answer: "CSO",
+},
+{
+    id: 170,
+    text: "If customer needs to transfer from orange to WE SLA will be ...",
+    image: "",
+    options: [],
+    answer: "1 D",
+},
+{
+    id: 171,
+    text: "If any customer needs to subscribe with us we should check the following:",
+    image: "",
+    options: [],
+    answer: "Land line bills and check availability",
+},
+{
+    id: 172,
+    text: "Comporate one invoice CST can add Extra Quota through",
+    image: "",
+    options: [],
+    answer: "Mobile APP",
+},
+{
+    id: 173,
+    text: "If customer is only above 65 years old, CCA will consider him eligible for Door to and no need to check anything else:",
+    image: "",
+    options: [],
+    answer: "False",
+},
+{
+    id: 174,
+    text: "Postpaid corporate One invoice Bill cycle is:",
+    image: "",
+    options: [],
+    answer: "Day 1 or Day 22 from each month",
+},
+{
+    id: 175,
+    text: "We can restart port from which tool",
+    image: "",
+    options: [],
+    answer: "CST 360",
+},
+{
+    id: 176,
+    text: "If CST refuses to inform us his landline number we will act normally",
+    image: "",
+    options: [],
+    answer: "True",
+},
+{
+    id: 177,
+    text: "Corporate CST can pay for the CPE in installments through the bank",
+    image: "",
+    options: [],
+    answer: "True",
+},
+{
+    id: 178,
+    text: "We must inform CST about Upload speed",
+    image: "",
+    options: [],
+    answer: "False",
+},
+{
+    id: 179,
+    text: "Free browsing on educational websites and electronic services is available for Ultra package only?",
+    image: "",
+    options: [],
+    answer: "True",
+},
+{
+    id: 180,
+    text: "If CST status was suspension like this We will",
+    image: "10.jpg",
+    options: [],
+    answer: "Direct Customer to Branch + Create SR",
+},
+{
+    id: 181,
+    text: "If CST called us ( One Invoice ) and want to make early renewal , his account like this we will",
+    image: "11.jpg",
+    options: [],
+    answer: "Direct Customer to his SPOC",
+},
+{
+    id: 182,
+    text: "CST has order on OM tool activity WO problem automatic TT created CCA will inform CST with SLA",
+    image: "12.jpg",
+    options: [],
+    answer: "7 WD",
+},
+{
+    id: 183,
+    text: "CST has order on OM tool creation date 4-7-2025 CST calling after 2WD right action",
+    image: "13.jpg",
+    options: [],
+    answer: "Create TT + inform CST 4 H",
+},
+{
+    id: 184,
+    text: "CST can change ….. From 111",
+    image: "",
+    options: [],
+    answer: "Mobile number and Email",
+},
+{
+    id: 185,
+    text: "CST can Change to a Package with Lower Amount If Account is Suspend due to Life Cycle reason?",
+    image: "",
+    options: [],
+    answer: "true",
+},
+{
+    id: 186,
+    text: "SR Incase customer ask for his consumption for FV",
+    image: "",
+    options: [],
+    answer: "Fixed Voice SR Inquiry>>General Information >>Products Inquiry",
+},
+{
+    id: 187,
+    text: "We can check from …. If the Change phone number is MSAN or CST Request",
+    image: "",
+    options: [],
+    answer: "OM",
+},
+{
+    id: 188,
+    text: "CST can make change (mobile number & e-mail) through?",
+    image: "",
+    options: [],
+    answer: "All of the above",
+},
+{
+    id: 189,
+    text: "CCA can check Daily usage from",
+    image: "",
+    options: [],
+    answer: "Check from BSS",
+},
+{
+    id: 190,
+    text: "SLA for Change phone number is ...?",
+    image: "",
+    options: [],
+    answer: "5d",
+},
+{
+    id: 191,
+    text: "No required paper needed for changing package via stores?",
+    image: "",
+    options: [],
+    answer: "false",
+},
+{
+    id: 192,
+    text: "CST can check usage detail monthly or weekly from WE APP",
+    image: "",
+    options: [],
+    answer: "true",
+},
+{
+    id: 193,
+    text: "If cst complains from Change phone number from we without his request the right SR",
+    image: "",
+    options: [],
+    answer: "FBB Non-Tech Complaint --> Change phone number --> MSAN",
+},
+{
+    id: 194,
+    text: "CST can Change Contact Name from",
+    image: "",
+    options: [],
+    answer: "Branches",
+},
+{
+    id: 195,
+    text: "We can check from .... If the Change phone number is MSAN or CST Request",
+    image: "",
+    options: [],
+    answer: "OM",
+},
+{
+    id: 196,
+    text: "SLA in case CST need to change Change Phone Number Normally is ...?",
+    image: "",
+    options: [],
+    answer: "5D",
+},
+{
+    id: 197,
+    text: "SLA of add Extra quota for Corporate Customer (individual)?",
+    image: "",
+    options: [],
+    answer: "24WH",
+},
+{
+    id: 198,
+    text: "CST can recharge his recharge card from",
+    image: "",
+    options: [],
+    answer: "111&IVR",
+},
+{
+    id: 199,
+    text: "CST can make change package (Not required change port) Before Due Date Via ......",
+    image: "",
+    options: [],
+    answer: "All of the above",
+},
+{
+    id: 200,
+    text: "If CST informed us that we changed his phone number but we didn't find any order on OM Tool What action is needed ?",
+    image: "",
+    options: [],
+    answer: "create TT",
+},
+{
+    id: 201,
+    text: "CST can Change Ownership from",
+    image: "",
+    options: [],
+    answer: "Branch",
+},
+{
+    id: 202,
+    text: "CST can change phone number if he subscribed in internet service from another ISP?",
+    image: "",
+    options: [],
+    answer: "false",
+},
+{
+    id: 203,
+    text: "in case CST called us on 18/11 at 23:20 and need salfny service it will available :",
+    image: "",
+    options: [],
+    answer: "18&19",
+},
+{
+    id: 204,
+    text: "Change location as per CST request only done if cst subscribed in voice only or Data and voice from WE :",
+    image: "",
+    options: [],
+    answer: "true",
+},
+{
+    id: 205,
+    text: "order Change phone number created on 4-4-2025 cst calling 10-4-2025 and order status is . CCA will .......",
+    image: "14.jpg",
+    options: [],
+    answer: "create TT",
+},
+{
+    id: 206,
+    text: "We can add balance fraction to CST in case CST need",
+    image: "",
+    options: [],
+    answer: "All of the above",
+},
+{
+    id: 207,
+    text: "In case CST called us and we found that he subscribed in (Game on 40) and need to subscribe in another one CCA Will",
+    image: "",
+    options: [],
+    answer: "inform CST that he must remove the first one then add another Game on",
+},
+{
+    id: 208,
+    text: "if CST need to make change package with Higher amount not Required Change Port after due date Via 111 CCA should inform cst to Recharge and call us through",
+    image: "",
+    options: [],
+    answer: "1H or less",
+},
+{
+    id: 209,
+    text: "Corporate customers are eligible to subscribe to Giga tank",
+    image: "",
+    options: [],
+    answer: "true",
+},
+{
+    id: 210,
+    text: "If CST informed us that we changed his phone number but we didn't find any order will create TT with SLA?",
+    image: "",
+    options: [],
+    answer: "4WD",
+},
+{
+    id: 211,
+    text: "Change phone number order in this activity CCA right action",
+    image: "",
+    options: [],
+    answer: "Same Process for Installation follow Up",
+},
+{
+    id: 212,
+    text: "We can add balance to CST with a maximum ....... In case his balance not enough to renew his internet package",
+    image: "",
+    options: [],
+    answer: "3LE",
+},
+{
+    id: 213,
+    text: "If CST need to Change his package to another with high amount and this change requires Change Port and his account",
+    image: "15.jpg",
+    options: [],
+    answer: "We will inform the customer that he pays for the current package and requests the change at least 7 days before the renewal date",
+},
+{
+    id: 214,
+    text: "This customer Can change speed On Spot from 111?",
+    image: "16.jpg",
+    options: [],
+    answer: "false",
+},
+{
+    id: 215,
+    text: "SLA change speed for this type of customer",
+    image: "17.jpg",
+    options: [],
+    answer: "1wd",
+},
+{
+    id: 216,
+    text: "We have two types of connection (main wire and outlet).",
+    image: "",
+    options: [],
+    answer: "True",
+},
+{
+    id: 217,
+    text: "Device can be use to remove welding?",
+    image: "",
+    options: [],
+    answer: "rosseta",
+},
+{
+    id: 218,
+    text: "CST can change CPE page username",
+    image: "",
+    options: [],
+    answer: "False",
+},
+{
+    id: 219,
+    text: "Which device will use to solve this connection issue?",
+    image: "",
+    options: [],
+    answer: "Filter before every phone set",
+},
+{
+    id: 220,
+    text: "Which of the below consider as private IP :",
+    image: "",
+    options: [],
+    answer: "192.168.1.1",
+},
+{
+    id: 221,
+    text: "Device that used for adding data signal to customer's line to have data and voice is at same line :",
+    image: "",
+    options: [],
+    answer: "DSLAM",
+},
+{
+    id: 222,
+    text: "which protocol is responsible for controlling the size of sent packets of data",
+    image: "",
+    options: [],
+    answer: "MTU",
+},
+{
+    id: 223,
+    text: "The value of default MTU?",
+    image: "18.jpg",
+    options: [],
+    answer: "1492",
+},
+{
+    id: 224,
+    text: "This device is?",
+    image: "19.jpg",
+    options: [],
+    answer: "Filter",
+},
+{
+    id: 225,
+    text: "This Rj use to?",
+    image: "20.jpg",
+    options: [],
+    answer: "Connect from CPE to pc/Acces point/Laptop",
+},
+{
+    id: 226,
+    text: "This device is?",
+    image: "21.jpg",
+    options: [],
+    answer: "Rosetta",
+},
+{
+    id: 227,
+    text: "This is?",
+    image: "22.jpg",
+    options: [],
+    answer: "Rj11",
+},
+{
+    id: 228,
+    text: "This connection is wrong or Right?",
+    image: "25.jpg",
+    options: [],
+    answer: "Wrong connection",
+},
+{
+    id: 229,
+    text: "This is the right connection if cst using CPE+ phone set.",
+    image: "24.jpg",
+    options: [],
+    answer: "true",
+},
+{
+    id: 230,
+    text: "Which device will use to solve this connection issue?",
+    image: "25.jpg",
+    options: [],
+    answer: "Splitter",
+},
+{
+    id: 231,
+    text: "This connection is wrong or Right?",
+    image: "26.jpg",
+    options: [],
+    answer: "Wrong connection",
+},
+{
+    id: 232,
+    text: "Which type of CPE configuration?",
+    image: "27.jpg",
+    options: [],
+    answer: "VDSL CPE",
+},
+{
+    id: 233,
+    text: "Which device will use to solve this connection issue?",
+    image: "28.jpg",
+    options: [],
+    answer: "Filter before every phone set",
+},
+{
+    id: 234,
+    text: "Which type of cables will Comes out of Exchange to connect to MSAN cabin?",
+    image: "29.jpg",
+    options: [],
+    answer: "Fiber",
+},
 
     ];
 
     let filteredQuestions = [...questions];
+    let isLoading = false;
 
     function highlightText(text, search) {
       if (!search) return text;
@@ -1008,29 +2251,42 @@
       container.style.display = 'grid';
       noResults.style.display = 'none';
 
-      container.innerHTML = questionsToRender.map(q => `
-       <div class="card">
-  <div class="qnum">السؤال ${q.id}</div>
-  <div class="qtext">${highlightText(q.text, searchTerm)}</div>
+      container.innerHTML = questionsToRender.map((q, index) => `
+        <article class="question-card" style="animation-delay: ${index * 0.1}s">
+          <div class="question-number">
+            <div class="question-icon">Q</div>
+            <span>Question ${q.id}</span>
+          </div>
+          
+          <div class="question-text">${highlightText(q.text, searchTerm)}</div>
 
-  ${q.image ? `<div class="image" ><img src="${q.image}" alt="Question Image" ></div>` : ''}
+          ${q.image ? `
+            <div class="question-image">
+              <img src="${q.image}" alt="Question ${q.id} Illustration" loading="lazy">
+            </div>
+          ` : ''}
 
-  <div class="options">
-    ${q.options.map(opt => `<div>${highlightText(opt, searchTerm)}</div>`).join('')}
-  </div>
+          <div class="options-container">
+            ${q.options.map(opt => `
+              <div class="option">${highlightText(opt, searchTerm)}</div>
+            `).join('')}
+          </div>
 
-  <div class="answer">الإجابة الصحيحة: ${highlightText(q.answer, searchTerm)}</div>
-</div>
-
+          <div class="answer-section">
+            <div class="answer-icon">✓</div>
+            <span>Correct Answer: ${highlightText(q.answer, searchTerm)}</span>
+          </div>
+        </article>
       `).join('');
     }
-    const totalQuestions = questions.length;
 
-    // طباعته أعلى الصفحة
-    document.getElementById("questionCount").innerText = "عدد الأسئلة: " + totalQuestions;
+    function updateQuestionCount() {
+      const questionCount = document.getElementById('questionCount');
+      questionCount.textContent = filteredQuestions.length;
+    }
+
     function filterQuestions() {
       const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-      const questionCount = document.getElementById('questionCount');
 
       if (!searchTerm) {
         filteredQuestions = [...questions];
@@ -1042,15 +2298,45 @@
         );
       }
 
-      questionCount.textContent = filteredQuestions.length;
+      updateQuestionCount();
       renderQuestions(filteredQuestions);
     }
 
-    // البحث المباشر
-    document.getElementById('searchInput').addEventListener('input', filterQuestions);
+    // Debounced search for better performance
+    let searchTimeout;
+    function debouncedSearch() {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(filterQuestions, 300);
+    }
+
+    // Event listeners
+    document.getElementById('searchInput').addEventListener('input', debouncedSearch);
     
-    // عرض جميع الأسئلة في البداية
-    renderQuestions(questions);
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      updateQuestionCount();
+      renderQuestions(questions);
+      
+      // Add smooth scrolling for better UX
+      document.documentElement.style.scrollBehavior = 'smooth';
+    });
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Focus search on Ctrl+F or Cmd+F
+      if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+        e.preventDefault();
+        document.getElementById('searchInput').focus();
+      }
+      
+      // Clear search on Escape
+      if (e.key === 'Escape') {
+        const searchInput = document.getElementById('searchInput');
+        searchInput.value = '';
+        searchInput.blur();
+        filterQuestions();
+      }
+    });
   </script>
 </body>
 </html>
