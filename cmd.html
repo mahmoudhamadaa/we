@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMD</title>
+    <style>
+      * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #2d1b69 100%);
+            min-height: 100vh;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 20, 147, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(75, 0, 130, 0.08) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 20, 147, 0.4);
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            color: #c8c8d4;
+            font-weight: 300;
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .command-card {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .command-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 20, 147, 0.15), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .command-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 20, 147, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.7);
+            border-color: rgba(255, 20, 147, 0.5);
+        }
+
+        .command-card:hover::before {
+            left: 100%;
+        }
+
+        .command-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .command-title span:first-child {
+            color: #ff1493;
+            text-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
+        }
+
+        .command-code {
+            background: linear-gradient(135deg, #000000 0%, #1a0933 100%);
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #8a2be2;
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .command-code::before {
+            content: '>';
+            color: #ff1493;
+            margin-left: 5px;
+        }
+
+        .command-description {
+            margin: 20px 0;
+            line-height: 1.8;
+            font-size: 1.15rem;
+            color: #f5f5f5;
+            font-weight: 300;
+        }
+
+        .command-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .command-features li {
+            padding: 12px 0;
+            padding-right: 25px;
+            position: relative;
+            transition: all 0.3s ease;
+            color: #d1d5db;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .command-features li:hover {
+            padding-right: 35px;
+            color: #ff1493;
+        }
+
+        .command-features li::before {
+            content: '⚡';
+            color: #8a2be2;
+            font-size: 1.2rem;
+            position: absolute;
+            right: 0;
+            transition: all 0.3s ease;
+        }
+
+        .command-features li:hover::before {
+            transform: scale(1.2);
+            color: #ff1493;
+        }
+
+        .expand-btn {
+            background: linear-gradient(135deg, #8a2be2 0%, #ff1493 100%);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .expand-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.5);
+            background: linear-gradient(135deg, #ff1493 0%, #8a2be2 100%);
+        }
+
+        .expand-btn:active {
+            transform: translateY(0);
+        }
+
+        .command-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            margin-top: 20px;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .command-details.expanded {
+            max-height: 800px;
+            padding: 25px;
+        }
+
+        .command-example {
+            background: linear-gradient(135deg, #000000 0%, #1a0933 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #ff1493;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .command-example::before {
+            content: 'مثال على التنفيذ';
+            position: absolute;
+            top: -12px;
+            right: 15px;
+            background: #ff1493;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .interactive-demo {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 35px;
+            margin: 40px 0;
+            text-align: center;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .demo-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(138, 43, 226, 0.4);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            margin: 15px;
+            font-size: 1.1rem;
+            width: 300px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .demo-input:focus {
+            outline: none;
+            border-color: #ff1493;
+            box-shadow: 
+                0 0 0 3px rgba(255, 20, 147, 0.3),
+                0 0 20px rgba(255, 20, 147, 0.4);
+            transform: scale(1.02);
+        }
+
+        .demo-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .demo-btn {
+            background: linear-gradient(135deg, #8a2be2 0%, #ff1493 100%);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            margin: 15px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.5);
+        }
+
+        .demo-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .demo-result {
+            background: linear-gradient(135deg, #000000 0%, #1a0933 100%);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 25px;
+            font-family: 'Courier New', monospace;
+            text-align: right;
+            min-height: 80px;
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            line-height: 1.6;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            color: #8a2be2;
+        }
+
+        .notes-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .note-card {
+            background: rgba(220, 20, 60, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(220, 20, 60, 0.4);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .note-card.info {
+            background: rgba(138, 43, 226, 0.15);
+            border-color: rgba(138, 43, 226, 0.4);
+        }
+
+        .note-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(220, 20, 60, 0.3);
+        }
+
+        .note-card.info:hover {
+            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.3);
+        }
+
+        .note-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .note-card:hover::before {
+            left: 100%;
+        }
+
+        .note-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .note-card .note-title {
+            color: #dc143c;
+        }
+
+        .note-card.info .note-title {
+            color: #8a2be2;
+        }
+
+        .note-content {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            line-height: 1.7;
+            color: #f5f5f5;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .note-content.expanded {
+            max-height: 400px;
+        }
+
+        .note-toggle {
+            background: rgba(220, 20, 60, 0.2);
+            border: 1px solid rgba(220, 20, 60, 0.5);
+            color: #dc143c;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .note-card.info .note-toggle {
+            background: rgba(138, 43, 226, 0.2);
+            border-color: rgba(138, 43, 226, 0.5);
+            color: #8a2be2;
+        }
+
+        .note-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            margin-top: 50px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .footer h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #ff1493;
+            text-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
+        }
+
+        .footer p {
+            font-size: 1.3rem;
+            color: #8a2be2;
+            font-weight: 600;
+        }
+
+        /* إضافة لمسات من الأخضر والأزرق للعناصر التفاعلية */
+        .success-element {
+            color: #28a745 !important;
+        }
+
+        .info-element {
+            color: #007bff !important;
+        }
+
+        .command-features li:nth-child(3n)::before {
+            color: #28a745;
+        }
+
+        .command-features li:nth-child(4n)::before {
+            color: #007bff;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .command-card {
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .command-card:nth-child(1) { animation-delay: 0.1s; }
+        .command-card:nth-child(2) { animation-delay: 0.2s; }
+        .command-card:nth-child(3) { animation-delay: 0.3s; }
+        .command-card:nth-child(4) { animation-delay: 0.4s; }
+        .command-card:nth-child(5) { animation-delay: 0.5s; }
+        .command-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pulse {
+            animation: pulse 0.8s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        .typing {
+            animation: typing 2s steps(20, end);
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .commands-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .demo-input {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .notes-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>  C M D</h1>
+        </div>
+
+        <div class="interactive-demo">
+            <h3>🔧 محاكي أوامر </h3>
+            <div style="margin: 20px 0;">
+                <input type="text" class="demo-input" id="targetInput" placeholder="أدخل IP أو اسم الموقع (مثال: google.com)">
+                <br>
+                <button class="demo-btn" onclick="simulateCommand('ping')">تنفيذ Ping</button>
+                <button class="demo-btn" onclick="simulateCommand('tracert')">تنفيذ Tracert</button>
+                <button class="demo-btn" onclick="simulateCommand('nslookup')">تنفيذ NSLookup</button>
+            </div>
+            <div class="demo-result" id="demoResult">
+                اختر أمرًا من الأعلى لمشاهدة النتائج ...
+            </div>
+        </div>
+
+        <div class="commands-grid">
+            <div class="command-card" onclick="toggleDetails(this)">
+                <div class="command-title">
+                    <span>ipconfig</span>
+                    <span class="command-code">ipconfig</span>
+                </div>
+                <div class="command-description">
+                    بيعرض الـ IP الخاص بالجهاز ويساعد في معرفة Default Gateway
+                </div>
+                <button class="expand-btn">عرض التفاصيل</button>
+                <div class="command-details">
+                    <div class="command-example">
+                        C:\Users> ipconfig<br>
+                        Windows IP Configuration<br><br>
+                        Ethernet adapter Local Area Connection:<br>
+                        &nbsp;&nbsp;&nbsp;IP Address. . . . . . . . . . . . : 192.168.1.100<br>
+                        &nbsp;&nbsp;&nbsp;Subnet Mask . . . . . . . . . . . : 255.255.255.0<br>
+                        &nbsp;&nbsp;&nbsp;Default Gateway . . . . . . . . . : 192.168.1.1
+                    </div>
+                    <p><strong>الاستخدامات:</strong></p>
+                    <ul class="command-features">
+                        <li>معرفة IP الجهاز الحالي</li>
+                        <li>التأكد من اتصال الجهاز بالشبكة</li>
+                        <li>معرفة عنوان الراوتر (Gateway)</li>
+                        <li>فحص إعدادات كارت الشبكة الأساسية</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="command-card" onclick="toggleDetails(this)">
+                <div class="command-title">
+                    <span>ipconfig /all</span>
+                    <span class="command-code">ipconfig /all</span>
+                </div>
+                <div class="command-description">
+                    نفس وظيفة ipconfig لكن بشكل موسع مع تفاصيل DHCP و DNS
+                </div>
+                <button class="expand-btn">عرض التفاصيل</button>
+                <div class="command-details">
+                    <div class="command-example">
+                        C:\Users> ipconfig /all<br><br>
+                        Windows IP Configuration<br><br>
+                        &nbsp;&nbsp;&nbsp;Host Name . . . . . . . . . . . . : DESKTOP-PC<br>
+                        &nbsp;&nbsp;&nbsp;DHCP Enabled. . . . . . . . . . . : Yes<br>
+                        &nbsp;&nbsp;&nbsp;DNS Servers . . . . . . . . . . . : 8.8.8.8<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.8.4.4<br>
+                        &nbsp;&nbsp;&nbsp;Physical Address. . . . . . . . . : 00-1B-63-84-45-E6
+                    </div>
+                    <p><strong>المعلومات الإضافية:</strong></p>
+                    <ul class="command-features">
+                        <li>حالة DHCP (مفعل أم لا)</li>
+                        <li>عناوين DNS المستخدمة</li>
+                        <li>MAC Address لكارت الشبكة</li>
+                        <li>تفاصيل شاملة لكل محول شبكة</li>
+                        <li>معلومات DHCP Server و Lease Time</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="command-card" onclick="toggleDetails(this)">
+                <div class="command-title">
+                    <span>ipconfig /flushdns</span>
+                    <span class="command-code">ipconfig /flushdns</span>
+                </div>
+                <div class="command-description">
+                    بيمسح الـ DNS Cache لحل مشاكل عدم فتح المواقع
+                </div>
+                <button class="expand-btn">عرض التفاصيل</button>
+                <div class="command-details">
+                    <div class="command-example">
+                        C:\Users> ipconfig /flushdns<br><br>
+                        Windows IP Configuration<br><br>
+                        Successfully flushed the DNS Resolver Cache.
+                    </div>
+                    <p><strong>متى نستخدمه:</strong></p>
+                    <ul class="command-features">
+                        <li>عندما المواقع لا تفتح رغم وجود انترنت</li>
+                        <li>بعد تغيير DNS Server</li>
+                        <li>لحل مشاكل التصفح البطيء</li>
+                        <li>عند ظهور مواقع قديمة محفوظة في الكاش</li>
+                        <li>عند تغيير إعدادات الشبكة</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="command-card" onclick="toggleDetails(this)">
+                <div class="command-title">
+                    <span>nslookup</span>
+                    <span class="command-code">nslookup domain.com</span>
+                </div>
+                <div class="command-description">
+                    لمعرفة الـ IP Address لأي موقع إلكتروني
+                </div>
+                <button class="expand-btn">عرض التفاصيل</button>
+                <div class="command-details">
+                    <div class="command-example">
+                        C:\Users> nslookup google.com<br><br>
+                        Server:  dns.google<br>
+                        Address:  8.8.8.8<br><br>
+                        Non-authoritative answer:<br>
+                        Name:    google.com<br>
+                        Address:  142.250.190.14
+                    </div>
+                    <p><strong>الاستخدامات:</strong></p>
+                    <ul class="command-features">
+                        <li>معرفة IP أي موقع</li>
+                        <li>التأكد من عمل DNS</li>
+                        <li>فحص اعدادات النطاق</li>
+                        <li>تشخيص مشاكل الوصول للمواقع</li>
+                        <li>التحقق من صحة DNS Records</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="command-card" onclick="toggleDetails(this)">
+                <div class="command-title">
+                    <span>ping</span>
+                    <span class="command-code">ping IP/domain</span>
+                </div>
+                <div class="command-description">
+                    للتأكد من وجود اتصال بين جهازين
+                </div>
+                <button class="expand-btn">عرض التفاصيل</button>
+                <div class="command-details">
+                    <div class="command-example">
+                        C:\Users> ping google.com<br><br>
+                        Pinging google.com [142.250.190.14] with 32 bytes of data:<br>
+                        Reply from 142.250.190.14: bytes=32 time=13ms TTL=118<br>
+                        Reply from 142.250.190.14: bytes=32 time=12ms TTL=118<br>
+                        Reply from 142.250.190.14: bytes=32 time=11ms TTL=118<br>
+                        Reply from 142.250.190.14: bytes=32 time=14ms TTL=118<br><br>
+                        Ping statistics for 142.250.190.14:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
+                    </div>
+                    <p><strong>تفسير النتائج:</strong></p>
+                    <ul class="command-features">
+                        <li><strong>Reply from:</strong> الاتصال سليم ✅</li>
+                        <li><strong>Request Timed Out:</strong> مفيش اتصال ❌</li>
+                        <li><strong>Time:</strong> سرعة الاستجابة بالميلي ثانية</li>
+                        <li>يستخدم لفحص الراوتر والمواقع</li>
+                        <li>TTL يوضح عدد الـ Hops المتبقية</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="command-card" onclick="toggleDetails(this)">
+                <div class="command-title">
+                    <span>tracert</span>
+                    <span class="command-code">tracert IP/domain</span>
+                </div>
+                <div class="command-description">
+                    لتتبع مسار الإشارة من جهازك للوجهة المطلوبة
+                </div>
+                <button class="expand-btn">عرض التفاصيل</button>
+                <div class="command-details">
+                    <div class="command-example">
+                        C:\Users> tracert google.com<br><br>
+                        Tracing route to google.com [142.250.190.14]<br>
+                        over a maximum of 30 hops:<br><br>
+                        &nbsp;&nbsp;1     1 ms     1 ms     1 ms  192.168.1.1<br>
+                        &nbsp;&nbsp;2    15 ms    14 ms    13 ms  10.0.0.1<br>
+                        &nbsp;&nbsp;3    25 ms    24 ms    23 ms  Egypt Telecom<br>
+                        &nbsp;&nbsp;4    35 ms    33 ms    31 ms  142.250.190.14<br><br>
+                        Trace complete.
+                    </div>
+                    <p><strong>تفسير النتائج:</strong></p>
+                    <ul class="command-features">
+                        <li><strong>Trace Completed:</strong> وصل بنجاح ✅</li>
+                        <li><strong>Request Timed Out:</strong> توقف في مكان معين ❌</li>
+                        <li>كل خط يمثل hop (قفزة) في الشبكة</li>
+                        <li>Egypt Telecom/tedata يدل على اكتمال المسار</li>
+                        <li>الأرقام الثلاثة تمثل زمن الاستجابة لكل محاولة</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="notes-section">
+            <div class="note-card" onclick="toggleNote(this)">
+                <div class="note-title">
+                    <span>⚠️</span>
+                    <span>ملاحظات هامة</span>
+                </div>
+                <p>معلومات مهمة يجب معرفتها عند استخدام هذه الأوامر</p>
+                <button class="note-toggle">عرض الملاحظات</button>
+                <div class="note-content">
+                    <p><strong>🔍 نصائح مهمة:</strong></p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>✓ أحيانًا لازم نعمل Trace على الـ WAN IP الخاص بالعميل</li>
+                        <li>✓ لو ظهر في النتيجة كلمة: Egypt Telecom أو net.tedata → ده معناه إن الـ Trace Completed</li>
+                        <li>✓ استخدم ping 8.8.8.8 للتأكد من وجود انترنت</li>
+                        <li>✓ إذا فشل ping للموقع ونجح للـ IP، المشكلة في DNS</li>
+                        <li>✓ Tracert قد يستغرق وقت طويل، كن صبوراً</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="note-card info" onclick="toggleNote(this)">
+                <div class="note-title">
+                    <span>📱</span>
+                    <span>أدوات إضافية</span>
+                </div>
+                <p>طرق بديلة لتنفيذ هذه الأوامر من أجهزة مختلفة</p>
+                <button class="note-toggle">عرض الأدوات</button>
+                <div class="note-content">
+                    <p><strong>🌐 من الموبايل:</strong></p>
+                    <p>يمكن استخدام الرابط التالي: <a href="https://at.hax/trace/" target="_blank" style="color: #64f4ac;">https://at.hax/trace/</a></p>
+                    
+                    <p><strong>🔧 من الراوتر:</strong></p>
+                    <ul style="list-style: none; padding: 0; margin-top: 15px;">
+                        <li>✓ معظم الراوترات فيها نفس الـ Options</li>
+                        <li>✓ مثال: ZTE Interface - Network Tools</li>
+                        <li>✓ ابحث عن قسم Diagnostics أو Network Tools</li>
+                        <li>✓ ستجد خيارات Ping و Traceroute</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Eng/Mahmoud Hamada</p>
+        </div>
+    </div>
+
+    <script>
+        // Toggle command details
+        function toggleDetails(card) {
+            const details = card.querySelector('.command-details');
+            const btn = card.querySelector('.expand-btn');
+            
+            if (details.classList.contains('expanded')) {
+                details.classList.remove('expanded');
+                btn.textContent = 'عرض التفاصيل';
+                btn.style.background = 'linear-gradient(135deg, #64f4ac 0%, #40e0d0 100%)';
+            } else {
+                details.classList.add('expanded');
+                btn.textContent = 'إخفاء التفاصيل';
+                btn.style.background = 'linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%)';
+            }
+        }
+
+        // Toggle notes
+        function toggleNote(card) {
+            const content = card.querySelector('.note-content');
+            const btn = card.querySelector('.note-toggle');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = card.classList.contains('info') ? 'عرض الأدوات' : 'عرض الملاحظات';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = card.classList.contains('info') ? 'إخفاء الأدوات' : 'إخفاء الملاحظات';
+            }
+        }
+
+        // Simulate commands with enhanced animations
+        function simulateCommand(command) {
+            const target = document.getElementById('targetInput').value || 'google.com';
+            const resultDiv = document.getElementById('demoResult');
+            
+            resultDiv.innerHTML = `<div style="color: #64f4ac; animation: pulse 1s infinite;">جاري تنفيذ ${command} ${target}...</div>`;
+            
+            setTimeout(() => {
+                let result = '';
+                switch(command) {
+                    case 'ping':
+                        result = `
+                            <div style="color: #64f4ac;">C:\\Users> ping ${target}</div><br>
+                            <div style="color: #40e0d0;">Pinging ${target} [172.217.16.174] with 32 bytes of data:</div><br>
+                            Reply from 172.217.16.174: bytes=32 time=13ms TTL=118<br>
+                            Reply from 172.217.16.174: bytes=32 time=12ms TTL=118<br>
+                            Reply from 172.217.16.174: bytes=32 time=11ms TTL=118<br>
+                            Reply from 172.217.16.174: bytes=32 time=14ms TTL=118<br><br>
+                            <div style="color: #40e0d0;">Ping statistics for 172.217.16.174:</div>
+                            <div style="margin-right: 20px;">Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</div><br>
+                            <div style="color: #64f4ac; font-weight: bold;">✅ الاتصال سليم - متوسط الوقت: 12ms</div>
+                        `;
+                        break;
+                    case 'tracert':
+                        result = `
+                            <div style="color: #64f4ac;">C:\\Users> tracert ${target}</div><br>
+                            <div style="color: #40e0d0;">Tracing route to ${target} [172.217.16.174]</div>
+                            <div style="color: #40e0d0;">over a maximum of 30 hops:</div><br>
+                            &nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 ms&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 ms&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 ms&nbsp;&nbsp;192.168.1.1<br>
+                            &nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;15 ms&nbsp;&nbsp;&nbsp;14 ms&nbsp;&nbsp;&nbsp;13 ms&nbsp;&nbsp;10.0.0.1<br>
+                            &nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;25 ms&nbsp;&nbsp;&nbsp;24 ms&nbsp;&nbsp;&nbsp;23 ms&nbsp;&nbsp;Egypt Telecom<br>
+                            &nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;35 ms&nbsp;&nbsp;&nbsp;33 ms&nbsp;&nbsp;&nbsp;31 ms&nbsp;&nbsp;172.217.16.174<br><br>
+                            <div style="color: #40e0d0;">Trace complete.</div><br>
+                            <div style="color: #64f4ac; font-weight: bold;">✅ Trace مكتمل بنجاح</div>
+                        `;
+                        break;
+                    case 'nslookup':
+                        result = `
+                            <div style="color: #64f4ac;">C:\\Users> nslookup ${target}</div><br>
+                            <div style="color: #40e0d0;">Server:  dns.google</div>
+                            <div style="color: #40e0d0;">Address:  8.8.8.8</div><br>
+                            Non-authoritative answer:<br>
+                            Name:    ${target}<br>
+                            Address:  172.217.16.174<br><br>
+                            <div style="color: #64f4ac; font-weight: bold;">✅ تم العثور على العنوان بنجاح</div>
+                        `;
+                        break;
+                }
+                resultDiv.innerHTML = result;
+                resultDiv.classList.add('typing');
+                setTimeout(() => {
+                    resultDiv.classList.remove('typing');
+                }, 1000);
+            }, 2500);
+        }
+
+        // Enhanced click effects
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('demo-btn')) {
+                e.target.classList.add('pulse');
+                setTimeout(() => {
+                    e.target.classList.remove('pulse');
+                }, 800);
+            }
+        });
+
+        // Add floating particles effect
+        function createFloatingParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: 4px;
+                height: 4px;
+                background: rgba(100, 244, 172, 0.6);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: -1;
+                animation: float 6s linear infinite;
+            `;
+            
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDelay = Math.random() * 6 + 's';
+            
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 6000);
+        }
+
+        // Create particles periodically
+        setInterval(createFloatingParticle, 800);
+
+        // Add CSS for floating animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0% {
+                    transform: translateY(100vh) rotate(0deg);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Enhanced hover effects for cards
+        document.querySelectorAll('.command-card, .note-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-12px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
