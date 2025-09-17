@@ -444,12 +444,346 @@
         padding: 16px 18px 16px 50px;
       }
     }
+      .glass-header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 1200px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1000;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                0 0 60px rgba(100, 200, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .glass-header:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                0 0 80px rgba(100, 200, 255, 0.3);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .glass-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .glass-btn:hover::before {
+            left: 100%;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        .glass-btn:active {
+            transform: translateY(0);
+        }
+
+        /* CMD Button Special Effect */
+        .cmd-btn {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 142, 83, 0.2));
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+
+        .cmd-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.3), rgba(255, 142, 83, 0.3));
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.2);
+        }
+
+        /* TOOLS Button Special Effect */
+        .tools-btn {
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(80, 227, 194, 0.2));
+            border: 1px solid rgba(74, 144, 226, 0.3);
+        }
+
+        .tools-btn:hover {
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.3), rgba(80, 227, 194, 0.3));
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.2);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 120px 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .content-placeholder {
+            max-width: 800px;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-placeholder h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #e7e7e7 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-placeholder p {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Glass Footer */
+        .glass-footer {
+            margin: 20px;
+            margin-top: auto;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-footer::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                rgba(255, 107, 107, 0.3) 0%, 
+                rgba(74, 144, 226, 0.3) 25%, 
+                rgba(80, 227, 194, 0.3) 50%, 
+                rgba(255, 142, 83, 0.3) 75%, 
+                rgba(255, 107, 107, 0.3) 100%);
+            border-radius: 25px;
+            z-index: -1;
+            animation: gradientRotate 8s linear infinite;
+        }
+
+        /* @keyframes gradientRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        } */
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-name {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+            animation: nameGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes nameGlow {
+            0% { filter: brightness(1) saturate(1); }
+            100% { filter: brightness(1.2) saturate(1.3); }
+        }
+
+        .footer-title {
+            font-size: 22px;
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .footer-description {
+            font-size: 16px;
+            color: #777;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+            font-style: italic;
+        }
+
+        .sparkle {
+            display: inline-block;
+            color: #ffd700;
+            margin: 0 5px;
+        }
+
+        /* @keyframes sparkle {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+            100% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+        } */
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .glass-header {
+                width: 90%;
+                padding: 0 20px;
+                height: 70px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .glass-btn {
+                padding: 10px 18px;
+                font-size: 13px;
+            }
+
+            .nav-buttons {
+                gap: 10px;
+            }
+
+            .content-placeholder {
+                padding: 40px 20px;
+                margin: 0 10px;
+            }
+
+            .content-placeholder h1 {
+                font-size: 36px;
+            }
+
+            .glass-footer {
+                margin: 10px;
+                padding: 30px 20px;
+            }
+
+            .footer-name {
+                font-size: 28px;
+            }
+
+            .footer-title {
+                font-size: 18px;
+            }
+        }
+
+        /* Floating particles effect */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.6) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float-particle 15s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
   </style>
 </head>
 <body>
-  <div class="background-decoration"></div>
+    <div class="background-decoration"></div>
+
+  <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
+    <div class="particle" style="left: 60%; animation-delay: 10s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 12s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 14s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 16s;"></div>
+
+    <!-- Glass Header -->
+    <header class="glass-header">
+        <div class="logo">MH.DEV</div>
+        <nav class="nav-buttons">
+     <a href="./cmd.html">  <button class="glass-btn cmd-btn">CMD</button></a>
+       <a href="./tools.html"><button class="glass-btn tools-btn">TOOLS</button></a>
+        </nav>
+    </header>
   
-  <div class="container">
+  <div class="container" style="padding-top: 120px;">
     <header class="header">
       <h1>🎯 Professional Question Bank</h1>
       <p class="subtitle">Technical Assessment & Knowledge Base</p>
@@ -480,7 +814,20 @@
       <p style="margin-top: 10px; font-size: 16px; opacity: 0.8;">Try different keywords or check your spelling</p>
     </div>
   </div>
-
+<footer class="glass-footer">
+        <div class="footer-content">
+            <h2 class="footer-name">Mahmoud Hamada</h2>
+            <div class="footer-title">
+                <span class="sparkle">✦</span>
+                Elite Developer & Tech Innovator
+                <span class="sparkle">✦</span>
+            </div>
+            <p class="footer-description">
+                Crafting exceptional digital experiences with cutting-edge technology and unparalleled expertise. 
+                Transforming visions into extraordinary realities, one line of code at a time.
+            </p>
+        </div>
+    </footer>
   <script>
     const questions = [
       {
@@ -2606,7 +2953,7 @@
 {
     id: 289,
     text: "If Data Down case need to be escalated for the third time SLA will be?",
-    image: "289.jpg",
+    image: "",
     options: [],
     answer: "1 Day",
 },
@@ -2878,6 +3225,272 @@
         "Re-Escalate the Ticket to IU Pool"
     ],
     answer: "Re-Escalate the Ticket to IU Pool",
+},
+{
+    id: 325,
+    text: "If Redirection page case not solved, TKT will escalated to......",
+    image: "",
+    options: ["SLS"],
+    answer: "SLS",
+},
+{
+    id: 326,
+    text: "In case CST has (wrong Nas port ID Login) and CCA will Escalate Ticket, so sla will be:",
+    image: "",
+    options: ["2:5h"],
+    answer: "2:5h",
+},
+{
+    id: 327,
+    text: "In case wrong Nas a port ID, CCA should inform customer that we should connected only once CPE per line in order to have a properly working service",
+    image: "",
+    options: ["True", "False"],
+    answer: "True",
+},
+{
+    id: 328,
+    text: "Customer can open YouTube/Facebook but contents doesn't apper, CCA right action...........",
+    image: "",
+    options: ["If CPE accessed try to adjust MTU and DNS (we then Google DNS)"],
+    answer: "If CPE accessed try to adjust MTU and DNS (we then Google DNS)",
+},
+{
+    id: 329,
+    text: "Browsing -All sites case will Re-escalate to:",
+    image: "",
+    options: ["Noc"],
+    answer: "Noc",
+},
+{
+    id: 330,
+    text: "For Escalation Browsing all site case status will be?",
+    image: "",
+    options: ["open"],
+    answer: "open",
+},
+{
+    id: 331,
+    text: "Internet not working and customer input that he paid the package bill within 24 hours, and line is active on BSS, and Get online service in matrix not blocked (for TDM lines) and for other lines --> Get online service on CST360 not blocked CCA right action:",
+    image: "",
+    options: ["Restart port"],
+    answer: "Restart port",
+},
+{
+    id: 332,
+    text: "Way of communication for Browsing case (All site - certain sites)",
+    image: "",
+    options: ["call", "sms", "recorded message"],
+    answer: "call or sms or recorded message",
+},
+{
+    id: 333,
+    text: "It's mandatory to inform CST let CBE turned on within Escalation browsing case",
+    image: "",
+    options: ["True", "False"],
+    answer: "True",
+},
+{
+    id: 334,
+    text: "In case customer asked to configure wireless and the steps not done, so the right will be:",
+    image: "",
+    options: ["FBB Tech problem- wireless- wireless configuration- not done"],
+    answer: "FBB Tech problem- wireless- wireless configuration- not done",
+},
+{
+    id: 335,
+    text: "If browsing all site case not solved TKT SLA will be.......",
+    image: "",
+    options: ["2h"],
+    answer: "2h",
+},
+{
+    id: 336,
+    text: "For Escalation Browsing certain site case support group will be:",
+    image: "",
+    options: ["SLS"],
+    answer: "SLS",
+},
+{
+    id: 337,
+    text: "Google DNS is?",
+    image: "",
+    options: ["8.8.8.8", "8.8.4.4"],
+    answer: "8.8.8.8 - 8.8.4.4",
+},
+{
+    id: 338,
+    text: "First step in Redirection page case:",
+    image: "",
+    options: ["Restart Port"],
+    answer: "Restart Port",
+},
+{
+    id: 339,
+    text: "Google DNS is?",
+    image: "",
+    options: ["8.8.8.8 - 8.8.4.4"],
+    answer: "8.8.8.8 - 8.8.4.4",
+},
+{
+    id: 340,
+    text: "Browsing certain site case if CST was the owner of the website and reserve domain/hosting with we CCA right action?",
+    image: "",
+    options: ["Transfer customer to Mail & Domain"],
+    answer: "Transfer customer to Mail & Domain",
+},
+{
+    id: 341,
+    text: "If CST has Browsing certain site case related to social website CCA right action:",
+    image: "",
+    options: ["Add Google DNS on CPE page"],
+    answer: "Add Google DNS on CPE page",
+},
+{
+    id: 342,
+    text: "Way of communication for Browsing case ( All site - Certain site)",
+    image: "",
+    options: ["call", "sms", "recorded message"],
+    answer: "call or sms or recorded message",
+},
+{
+    id: 343,
+    text: "Customer follow up escalated ticket (Browsing all site) but it passed SLA, so right SR:",
+    image: "",
+    options: ["FBB Tech problem- Browsing - All sites - follow up after SLA"],
+    answer: "FBB Tech problem- Browsing - All sites - follow up after SLA",
+},
+{
+    id: 344,
+    text: "Delay SLA for Browsing - All sites:",
+    image: "",
+    options: ["2 H"],
+    answer: "2 H",
+},
+{
+    id: 345,
+    text: "Unsupported services will be escelate to",
+    image: "",
+    options: ["second level advanced"],
+    answer: "second level advanced",
+},
+{
+    id: 346,
+    text: "Customer can open YouTube/ Facebook but contents doesn't appear, CCA right action...",
+    image: "",
+    options: ["if CPE accessed try to adjust MTU and DNS (google DNS)"],
+    answer: "if CPE accessed try to adjust MTU and DNS (google DNS)",
+},
+{
+    id: 347,
+    text: "Internet not working and customer input that he paid the package bill within 24 hours, and line is active on BSS, and Get online service in matrix not blocked (for TDM lines) and for other lines --> Get online service on CST360 not blocked CCA right action:",
+    image: "",
+    options: ["Restart port"],
+    answer: "Restart port",
+},
+{
+    id: 348,
+    text: "Escalation browsing certain site case TT will be:",
+    image: "",
+    options: ["Broadband -> Technical -> ADSL/VDSL -> MCU call center -> Browsing"],
+    answer: "Broadband -> Technical -> ADSL/VDSL -> MCU call center -> Browsing",
+},
+{
+    id: 349,
+    text: "If Redirection page case not solved, TKT will escalated to...",
+    image: "",
+    options: ["SLS"],
+    answer: "SLS",
+},
+{
+    id: 350,
+    text: "If Browsing -All sites case is solved with CPE configuration, so the right SR:",
+    image: "",
+    options: ["FBB Tech problem- Browsing- All sites - configuration"],
+    answer: "FBB Tech problem- Browsing- All sites - configuration",
+},
+{
+    id: 351,
+    text: "Trace customer Wan IP will be done through:",
+    image: "",
+    options: ["Agent side"],
+    answer: "Agent side",
+},
+{
+    id: 352,
+    text: "CST should Disable CPE firewall and Activate ping option on CPE page - if available before Escalation browsing - all site",
+    image: "",
+    options: ["True", "False"],
+    answer: "True",
+},
+{
+    id: 353,
+    text: "In case CCA will escalate browsing - Certain site at 12pm, CCA not mandatory to check on call or create IR before escalation:",
+    image: "",
+    options: ["True", "False"],
+    answer: "True",
+},
+{
+    id: 354,
+    text: "CST has Browsing case while CCA ping Google Domain using HDM Tool result was No Reply then ping Google IP from CST side the Result was Reply from Google IP so next step is:",
+    image: "",
+    options: ["Do Flush DNS command if CST using PC"],
+    answer: "Do Flush DNS command if CST using PC",
+},
+{
+    id: 355,
+    text: "CCA should not inform customer TKT id while escalation browsing case for the first time:",
+    image: "",
+    options: ["True", "False"],
+    answer: "False",
+},
+{
+    id: 356,
+    text: "Browsing - All site case will Re-escalate to:",
+    image: "",
+    options: ["NOC"],
+    answer: "NOC",
+},
+{
+    id: 357,
+    text: "In case CCA found the update 'feed us with a Trace from customer side' what should we do",
+    image: "",
+    options: ["Let customer send a snapshot for Google IP Trace as an attachment then Re-escalate the ticket"],
+    answer: "Let customer send a snapshot for Google IP Trace as an attachment then Re-escalate the ticket",
+},
+{
+    id: 358,
+    text: "In case customer is facing gaming issue and while T.S line congested or within ratio right action will be",
+    image: "",
+    options: ["Deliver congested script to customer"],
+    answer: "Deliver congested script to customer",
+},
+{
+    id: 359,
+    text: "SLA for gaming Q will be",
+    image: "",
+    options: ["15 min"],
+    answer: "15 min",
+},
+{
+    id: 360,
+    text: "Unsupported services will be escelate to",
+    image: "",
+    options: ["second level advanced"],
+    answer: "second level advanced",
+},
+{
+    id: 361,
+    text: "CSO Handle all CPE types that have GuI for real and virtual",
+    image: "",
+    options: ["True", "False"],
+    answer: "True",
+},
+{
+    id: 362,
+    text: "SLA while escalation case No AAA profile in NST",
+    image: "",
+    options: ["72 H"],
+    answer: "72 H",
 },
 
     ];
