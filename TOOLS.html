@@ -357,20 +357,6 @@
             margin-bottom: 25px;
             position: relative;
         }
-/* 
-        .tool-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 20px;
-            font-size: 2rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s ease;
-        } */
 
         .tool-icon::before {
             content: '';
@@ -620,6 +606,13 @@
             50% { box-shadow: 0 0 40px rgba(250, 112, 154, 0.8); }
         }
 
+        /* Search Highlight Animation */
+        @keyframes highlightFound {
+            0% { transform: scale(1); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 25px 50px rgba(102, 126, 234, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); }
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .dashboard {
@@ -738,8 +731,40 @@
         <!-- English Content -->
         <div class="lang-content" id="content-en">
             <div class="header">
-                <h1>🚀 ADVANCED TECH DASHBOARD</h1>
-                <p>Next-Generation Interactive System Management Platform</p>
+                <h1>🚀 TOOLS DASHBOARD</h1>
+                
+                <!-- Search Bar -->
+                <div style="margin: 30px auto; max-width: 600px; position: relative;">
+                    <input type="text" id="searchInput" placeholder="Search tools, features, or functions..." style="
+                        width: 100%;
+                        padding: 15px 50px 15px 20px;
+                        border: 2px solid var(--glass-border);
+                        border-radius: 25px;
+                        background: var(--glass-bg);
+                        backdrop-filter: blur(20px);
+                        color: var(--text-light);
+                        font-size: 1rem;
+                        outline: none;
+                        transition: all 0.3s ease;
+                    " />
+                    <button onclick="performSearch()" style="
+                        position: absolute;
+                        right: 10px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background: var(--primary-gradient);
+                        border: none;
+                        border-radius: 50%;
+                        width: 35px;
+                        height: 35px;
+                        color: white;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.3s ease;
+                    ">🔍</button>
+                </div>
             </div>
 
             <div class="timeline-container">
@@ -747,48 +772,49 @@
                 <div class="timeline-3d">
                     <div class="timeline-node" data-system="oss">
                         <div class="node-content">
-                            <!-- <span class="node-icon">🏛️</span> -->
+                            <span class="node-icon">🛠️</span>
                             <div class="node-title">OSS</div>
                             <div class="node-status status-deprecated">Deprecated</div>
                         </div>
                     </div>
                     <div class="timeline-node" data-system="bss">
                         <div class="node-content">
-                            <!-- <span class="node-icon">💼</span> -->
+                            <span class="node-icon">💼</span>
                             <div class="node-title">BSS</div>
                             <div class="node-status status-active">Active</div>
                         </div>
                     </div>
                     <div class="timeline-node" data-system="cst360">
                         <div class="node-content">
-                            <!-- <span class="node-icon">🌐</span> -->
+                            <span class="node-icon">🌐</span>
                             <div class="node-title">CST360</div>
                             <div class="node-status status-latest">Latest</div>
                         </div>
                     </div>
                 </div>
             </div>
-<!--  <div class="tools-grid">
+
+            <div class="tools-grid">
                 <div class="tool-card" data-category="legacy">
                     <div class="status-badge status-deprecated">DEPRECATED</div>
                     <div class="tool-header">
                         <div class="tool-info">
                             <h3>OSS - Legacy System</h3>
-                            <p>Operations Support System - Discontinued</p>
+                            <p>Old Customer Management System</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
+                            <span class="feature-pill">Technical Follow-up</span>
                             <span class="feature-pill">Legacy Operations</span>
                             <span class="feature-pill">Historical Data</span>
-                            <span class="feature-pill">Reference Only</span>
                         </div>
                     </div>
                     <button class="holo-btn" onclick="toggleDetails(this)">VIEW DETAILS</button>
                     <div class="expandable-content">
-                        <p><strong>Description:</strong> The original Operations Support System that managed core business operations and customer services.</p>
-                        <p><strong>Status:</strong> Discontinued and replaced by modern systems</p>
-                        <p><strong>Usage:</strong> Historical reference and data migration purposes</p>
+                        <p><strong>Description:</strong> The old customer management system that focused on technical follow-up operations.</p>
+                        <p><strong>Status:</strong> Deprecated and replaced by BSS system</p>
+                        <p><strong>Usage:</strong> Technical monitoring and historical reference</p>
                     </div>
                 </div>
 
@@ -797,26 +823,28 @@
                     <div class="tool-header">
                         <div class="tool-info">
                             <h3>BSS - Business Support System</h3>
-                            <p>Modern replacement for OSS</p>
+                            <p>Current Customer Management System</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
-                            <span class="feature-pill">Customer Management</span>
-                            <span class="feature-pill">Billing System</span>
-                            <span class="feature-pill">Service Tracking</span>
-                            <span class="feature-pill">Real-time Analytics</span>
+                            <span class="feature-pill">Customer Data & Billing</span>
+                            <span class="feature-pill">Package Changes</span>
+                            <span class="feature-pill">SR/TT Creation</span>
+                            <span class="feature-pill">Line Inquiry</span>
                         </div>
                     </div>
                     <button class="holo-btn" onclick="toggleDetails(this)">EXPLORE FEATURES</button>
                     <div class="expandable-content">
-                        <p><strong>Core Features:</strong></p>
+                        <p><strong>Customer Profile Functions:</strong></p>
                         <ul style="margin: 10px 0; padding-left: 20px;">
-                            <li>Advanced customer relationship management</li>
-                            <li>Automated billing and payment processing</li>
-                            <li>Service provisioning and tracking</li>
-                            <li>Real-time performance monitoring</li>
-                            <li>Comprehensive reporting suite</li>
+                            <li>Bill renewal and payment processing</li>
+                            <li>Package changes and modifications</li>
+                            <li>SR/TT (Service Request/Trouble Ticket) creation</li>
+                            <li>Additional package subscriptions</li>
+                            <li>Line inquiry and status checks</li>
+                            <li>Option Back / Family Filter subscription management</li>
+                            <li>Barring/Suspend line operations</li>
                         </ul>
                     </div>
                 </div>
@@ -825,27 +853,33 @@
                     <div class="status-badge status-latest">LATEST</div>
                     <div class="tool-header">
                         <div class="tool-info">
-                            <h3>CST360 - Complete Solution</h3>
-                            <p>Next-generation integrated platform</p>
+                            <h3>CST360 - Advanced Platform</h3>
+                            <p>More advanced system than BSS</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
-                            <span class="feature-pill">AI-Powered Analytics</span>
-                            <span class="feature-pill">360° View</span>
-                            <span class="feature-pill">Cloud Native</span>
-                            <span class="feature-pill">Microservices</span>
+                            <span class="feature-pill">Error Logs Extraction</span>
+                            <span class="feature-pill">BRAS SP Info</span>
+                            <span class="feature-pill">IP/MAC Detection</span>
+                            <span class="feature-pill">Service Status</span>
                         </div>
                     </div>
                     <button class="holo-btn" onclick="toggleDetails(this)">DISCOVER MORE</button>
                     <div class="expandable-content">
-                        <p><strong>Revolutionary Platform:</strong></p>
+                        <p><strong>Advanced Functions:</strong></p>
                         <ul style="margin: 10px 0; padding-left: 20px;">
-                            <li>AI-driven predictive analytics</li>
-                            <li>360-degree customer insights</li>
-                            <li>Cloud-native architecture</li>
-                            <li>Advanced automation capabilities</li>
-                            <li>Includes NST search tool</li>
+                            <li>Extract Logs for error analysis</li>
+                            <li>Identify BRAS SP information</li>
+                            <li>Retrieve IP/MAC Address details</li>
+                            <li>Determine maximum line speed capacity</li>
+                            <li>Check service status: Data Up/Down</li>
+                            <li>Monitor Outage Up/Down status</li>
+                            <li>Track any Updates (who made them and what changed)</li>
+                            <li>Display remaining package balance</li>
+                            <li>Perform Restart Port for lines</li>
+                            <li>Check Option Back or Family Filter subscriptions</li>
+                            <li>Get WAN IP, Account Number, and User Name</li>
                         </ul>
                     </div>
                 </div>
@@ -853,154 +887,24 @@
                 <div class="tool-card" data-category="tool">
                     <div class="tool-header">
                         <div class="tool-info">
-                            <h3>NST - Advanced Search Tool</h3>
-                            <p>Integrated within CST360</p>
+                            <h3>ADF - Advanced Fault Detection</h3>
+                            <p>Major Fault Detection Tool</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
-                            <span class="feature-pill">Deep Search</span>
-                            <span class="feature-pill">Data Mining</span>
-                            <span class="feature-pill">Custom Reports</span>
-                            <span class="feature-pill">ML Insights</span>
+                            <span class="feature-pill">Major Fault Detection</span>
+                            <span class="feature-pill">Line Analysis</span>
+                            <span class="feature-pill">Fault Identification</span>
                         </div>
                     </div>
                     <button class="holo-btn" onclick="toggleDetails(this)">LEARN MORE</button>
                     <div class="expandable-content">
-                        <p><strong>Powerful Search Engine:</strong></p>
+                        <p><strong>Fault Detection Tool:</strong></p>
                         <ul style="margin: 10px 0; padding-left: 20px;">
-                            <li>Advanced database querying</li>
-                            <li>Machine learning pattern recognition</li>
-                            <li>Custom report generation</li>
-                            <li>Real-time data analysis</li>
-                            <li>LDAP Profile queries</li>
-                            <li>AAA session tracking</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tool-card" data-category="monitoring">
-                    <div class="tool-header">
-                        <div class="tool-info">
-                            <h3>System Monitoring</h3>
-                            <p>Real-time system performance tracking</p>
-                        </div>
-                    </div>
-                    <div class="features-container">
-                        <div class="feature-pills">
-                            <span class="feature-pill">Performance Metrics</span>
-                            <span class="feature-pill">Alerts</span>
-                            <span class="feature-pill">Health Checks</span>
-                        </div>
-                    </div>
-                    <button class="holo-btn" onclick="toggleDetails(this)">VIEW MONITORING</button>
-                    <div class="expandable-content">
-                        <p><strong>Monitoring Capabilities:</strong></p>
-                        <ul style="margin: 10px 0; padding-left: 20px;">
-                            <li>Real-time system health monitoring</li>
-                            <li>Automated alert systems</li>
-                            <li>Performance analytics dashboard</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tool-card" data-category="reports">
-                    <div class="tool-header">
-                        <div class="tool-info">
-                            <h3>Report/Cases Tool</h3>
-                            <p>Comprehensive reporting and case management</p>
-                        </div>
-                    </div>
-                    <div class="features-container">
-                        <div class="feature-pills">
-                            <span class="feature-pill">TTS Cases</span>
-                            <span class="feature-pill">Delayed Tickets</span>
-                            <span class="feature-pill">Gaming Queue</span>
-                        </div>
-                    </div>
-                    <button class="holo-btn" onclick="toggleDetails(this)">ACCESS REPORTS</button>
-                    <div class="expandable-content">
-                        <p><strong>Available Functions:</strong></p>
-                        <ul style="margin: 10px 0; padding-left: 20px;">
-                            <li>TTS Cases management</li>
-                            <li>Create delayed tickets</li>
-                            <li>Gaming queue ticket creation</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tool-card" data-category="operations">
-                    <div class="tool-header">
-                        <div class="tool-info">
-                            <h3>Operations Management (OM)</h3>
-                            <p>Core operational procedures</p>
-                        </div>
-                    </div>
-                    <div class="features-container">
-                        <div class="feature-pills">
-                            <span class="feature-pill">Technical Tasks</span>
-                            <span class="feature-pill">Infrastructure</span>
-                            <span class="feature-pill">Maintenance</span>
-                        </div>
-                    </div>
-                    <button class="holo-btn" onclick="toggleDetails(this)">MANAGE OPERATIONS</button>
-                    <div class="expandable-content">
-                        <p><strong>Operation Features:</strong></p>
-                        <ul style="margin: 10px 0; padding-left: 20px;">
-                            <li>Infrastructure management</li>
-                            <li>Technical maintenance tasks</li>
-                            <li>System optimization procedures</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tool-card" data-category="tickets">
-                    <div class="tool-header">
-                        <div class="tool-info">
-                            <h3>TTS - Ticket Tracking System</h3>
-                            <p>Advanced ticket management</p>
-                        </div>
-                    </div>
-                    <div class="features-container">
-                        <div class="feature-pills">
-                            <span class="feature-pill">Technical Tickets</span>
-                            <span class="feature-pill">Item Logs</span>
-                            <span class="feature-pill">Updates</span>
-                        </div>
-                    </div>
-                    <button class="holo-btn" onclick="toggleDetails(this)">TRACK TICKETS</button>
-                    <div class="expandable-content">
-                        <p><strong>Ticket Management:</strong></p>
-                        <ul style="margin: 10px 0; padding-left: 20px;">
-                            <li>All technical tickets tracking</li>
-                            <li>Item logs and status updates</li>
-                            <li>Automated ticket routing</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tool-card" data-category="hdm">
-                    <div class="tool-header">
-                        <div class="tool-info">
-                            <h3>HDM - Hardware Device Management</h3>
-                            <p>Network device configuration</p>
-                        </div>
-                    </div>
-                    <div class="features-container">
-                        <div class="feature-pills">
-                            <span class="feature-pill">CPE Management</span>
-                            <span class="feature-pill">WiFi Settings</span>
-                            <span class="feature-pill">DHCP Config</span>
-                        </div>
-                    </div>
-                    <button class="holo-btn" onclick="toggleDetails(this)">CONFIGURE DEVICES</button>
-                    <div class="expandable-content">
-                        <p><strong>Device Management:</strong></p>
-                        <ul style="margin: 10px 0; padding-left: 20px;">
-                            <li>CPE type configuration</li>
-                            <li>WiFi settings management</li>
-                            <li>DHCP settings & gateway changes</li>
-                            <li>Reset CPE and restart devices</li>
+                            <li>Identifies Major Fault presence on customer lines</li>
+                            <li>Advanced line diagnostics and analysis</li>
+                            <li>Real-time fault monitoring and detection</li>
                         </ul>
                     </div>
                 </div>
@@ -1008,34 +912,239 @@
                 <div class="tool-card" data-category="assla">
                     <div class="tool-header">
                         <div class="tool-info">
-                            <h3>Assla - Service Tools</h3>
-                            <p>Advanced service management</p>
+                            <h3>ASSIA Tools - Line Quality & Efficiency</h3>
+                            <p>Advanced line testing and optimization</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
-                            <span class="feature-pill">Service Recommendations</span>
+                            <span class="feature-pill">Service Recommendation</span>
                             <span class="feature-pill">Profile Optimization</span>
-                            <span class="feature-pill">DSL Management</span>
+                            <span class="feature-pill">Loop Length</span>
+                            <span class="feature-pill">XELT Analysis</span>
                         </div>
                     </div>
                     <button class="holo-btn" onclick="toggleDetails(this)">OPTIMIZE SERVICES</button>
                     <div class="expandable-content">
-                        <p><strong>Service Features:</strong></p>
+                        <p><strong>Line Testing Features:</strong></p>
                         <ul style="margin: 10px 0; padding-left: 20px;">
-                            <li>Service recommendation engine</li>
-                            <li>Profile speed optimization</li>
-                            <li>DSL tab management</li>
+                            <li>Service Recommendation → Line efficiency assessment</li>
+                            <li>Profile Optimization (PO) → Enable/test PO functionality</li>
+                            <li>Line Summary → Loop Length → Distance from central office</li>
+                            <li>Clear View → Run ASSIA → Tool activation</li>
+                            <li>Line Details → Dispatch Score → Isolation rating</li>
+                            <li>Operational Data → Real-time → Live monitoring</li>
+                            <li>Router type identification (– < +)</li>
+                            <li>DSL → XELT Analysis → Perform XELT → Signal testing from box/central</li>
+                            <li>DSL → Realtime Traffic → Monitor download speeds</li>
+                            <li>Real Time PO for speed issues</li>
+                            <li>DSL → XELT Analysis → Run SELT → Line quality testing</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tool-card" data-category="tickets">
+                    <div class="tool-header">
+                        <div class="tool-info">
+                            <h3>TTS - Trouble Ticketing System</h3>
+                            <p>Complaints and Trouble Tickets Management</p>
+                        </div>
+                    </div>
+                    <div class="features-container">
+                        <div class="feature-pills">
+                            <span class="feature-pill">Complaint Management</span>
+                            <span class="feature-pill">Trouble Tickets</span>
+                            <span class="feature-pill">Status Updates</span>
+                            <span class="feature-pill">Department Routing</span>
+                        </div>
+                    </div>
+                    <button class="holo-btn" onclick="toggleDetails(this)">TRACK TICKETS</button>
+                    <div class="expandable-content">
+                        <p><strong>TTS Functions:</strong></p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>Submit complaints and Trouble Tickets</li>
+                            <li>Track complaint-related updates</li>
+                            <li>Write Updates when changes occur</li>
+                            <li>Send updates to relevant departments</li>
+                            <li>Complete ticket lifecycle management</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tool-card" data-category="reports">
+                    <div class="tool-header">
+                        <div class="tool-info">
+                            <h3>IR - Incident Report Tool</h3>
+                            <p>Report creation and TT/SR management</p>
+                        </div>
+                    </div>
+                    <div class="features-container">
+                        <div class="feature-pills">
+                            <span class="feature-pill">Incident Reports</span>
+                            <span class="feature-pill">TT Creation</span>
+                            <span class="feature-pill">SR Management</span>
+                        </div>
+                    </div>
+                    <button class="holo-btn" onclick="toggleDetails(this)">ACCESS REPORTS</button>
+                    <div class="expandable-content">
+                        <p><strong>Report Functions:</strong></p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>Create comprehensive Incident Reports</li>
+                            <li>Generate TT/SR (Trouble Ticket/Service Request)</li>
+                            <li>Document and track incidents</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tool-card" data-category="hdm">
+                    <div class="tool-header">
+                        <div class="tool-info">
+                            <h3>HDM - Home Device Manager</h3>
+                            <p>Complete customer router control</p>
+                        </div>
+                    </div>
+                    <div class="features-container">
+                        <div class="feature-pills">
+                            <span class="feature-pill">Router Restart</span>
+                            <span class="feature-pill">Status Monitoring</span>
+                            <span class="feature-pill">Password Changes</span>
+                            <span class="feature-pill">DNS/MTU Config</span>
+                        </div>
+                    </div>
+                    <button class="holo-btn" onclick="toggleDetails(this)">CONFIGURE DEVICES</button>
+                    <div class="expandable-content">
+                        <p><strong>Router Management:</strong></p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>Restart customer routers remotely</li>
+                            <li>Check router status: On/Off</li>
+                            <li>Monitor ADSL uptime duration</li>
+                            <li>Change router passwords</li>
+                            <li>Identify router types and models</li>
+                            <li>Modify DNS or MTU settings</li>
+                            <li>Remote troubleshooting for customer support</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tool-card" data-category="operations">
+                    <div class="tool-header">
+                        <div class="tool-info">
+                            <h3>Teckt Maker - Logical Solution Guide</h3>
+                            <p>Step-by-step problem resolution guidance</p>
+                        </div>
+                    </div>
+                    <div class="features-container">
+                        <div class="feature-pills">
+                            <span class="feature-pill">Logical Analysis</span>
+                            <span class="feature-pill">Physical Diagnosis</span>
+                            <span class="feature-pill">Step-by-Step Guide</span>
+                            <span class="feature-pill">Customer Support</span>
+                        </div>
+                    </div>
+                    <button class="holo-btn" onclick="toggleDetails(this)">MANAGE OPERATIONS</button>
+                    <div class="expandable-content">
+                        <p><strong>Problem Resolution Features:</strong></p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>Guides logical solution steps for any problem</li>
+                            <li>Identifies if issue is Logical (system/settings) or Physical (cable/device)</li>
+                            <li>Provides step-by-step customer interaction guidance</li>
+                            <li>Systematic troubleshooting methodology</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tool-card" data-category="monitoring">
+                    <div class="tool-header">
+                        <div class="tool-info">
+                            <h3>OM - Order Management</h3>
+                            <p>Subscription and order tracking</p>
+                        </div>
+                    </div>
+                    <div class="features-container">
+                        <div class="feature-pills">
+                            <span class="feature-pill">New Orders</span>
+                            <span class="feature-pill">Service Cancellation</span>
+                            <span class="feature-pill">ADSL to Fiber</span>
+                        </div>
+                    </div>
+                    <button class="holo-btn" onclick="toggleDetails(this)">VIEW MONITORING</button>
+                    <div class="expandable-content">
+                        <p><strong>Order Management Functions:</strong></p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>Track any new Order subscriptions</li>
+                            <li>Process service cancellations</li>
+                            <li>Handle ADSL to Fiber conversions</li>
+                            <li>Complete subscription lifecycle management</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tool-card" data-category="matrix">
+                    <div class="tool-header">
+                        <div class="tool-info">
+                            <h3>Matrix - TDM Line Management</h3>
+                            <p>Similar to CST but specialized for TDM lines</p>
+                        </div>
+                    </div>
+                    <div class="features-container">
+                        <div class="feature-pills">
+                            <span class="feature-pill">TDM Lines</span>
+                            <span class="feature-pill">Specialized Monitoring</span>
+                            <span class="feature-pill">Line Analysis</span>
+                        </div>
+                    </div>
+                    <button class="holo-btn" onclick="toggleDetails(this)">MANAGE TDM</button>
+                    <div class="expandable-content">
+                        <p><strong>TDM Management:</strong></p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>Specialized tool for TDM line types</li>
+                            <li>Similar functionality to CST360</li>
+                            <li>Dedicated TDM line monitoring and analysis</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Arabic Content -->
         <div class="lang-content hidden" id="content-ar" dir="rtl">
             <div class="header">
-                <h1>🚀 لوحة التكنولوجيا المتقدمة</h1>
-                <p>منصة إدارة الأنظمة التفاعلية من الجيل القادم</p>
+                <h1>🚀 لوحة الادوات </h1>
+          
+                
+                <!-- Search Bar Arabic -->
+                <div style="margin: 30px auto; max-width: 600px; position: relative;">
+                    <input type="text" id="searchInputAr" placeholder="ابحث عن الأدوات والمميزات والوظائف..." style="
+                        width: 100%;
+                        padding: 15px 50px 15px 20px;
+                        border: 2px solid var(--glass-border);
+                        border-radius: 25px;
+                        background: var(--glass-bg);
+                        backdrop-filter: blur(20px);
+                        color: var(--text-light);
+                        font-size: 1rem;
+                        outline: none;
+                        transition: all 0.3s ease;
+                        text-align: right;
+                    " />
+                    <button onclick="performSearch()" style="
+                        position: absolute;
+                        left: 10px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background: var(--primary-gradient);
+                        border: none;
+                        border-radius: 50%;
+                        width: 35px;
+                        height: 35px;
+                        color: white;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.3s ease;
+                    ">🔍</button>
+                </div>
             </div>
 
             <div class="timeline-container">
@@ -1043,7 +1152,7 @@
                 <div class="timeline-3d">
                     <div class="timeline-node" data-system="oss">
                         <div class="node-content">
-                            <span class="node-icon">🏛️</span>
+                            <span class="node-icon">🛠️</span>
                             <div class="node-title">OSS</div>
                             <div class="node-status status-deprecated">مُلغى</div>
                         </div>
@@ -1071,21 +1180,21 @@
                     <div class="tool-header">
                         <div class="tool-info">
                             <h3>OSS - النظام القديم</h3>
-                            <p>نظام دعم العمليات - متوقف</p>
+                            <p>النظام القديم لإدارة العملاء</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
+                            <span class="feature-pill">المتابعة الفنية</span>
                             <span class="feature-pill">العمليات القديمة</span>
                             <span class="feature-pill">البيانات التاريخية</span>
-                            <span class="feature-pill">للمرجع فقط</span>
                         </div>
                     </div>
                     <button class="holo-btn" onclick="toggleDetails(this)">عرض التفاصيل</button>
                     <div class="expandable-content">
-                        <p><strong>الوصف:</strong> نظام دعم العمليات الأصلي الذي كان يدير العمليات التجارية الأساسية وخدمات العملاء.</p>
-                        <p><strong>الحالة:</strong> متوقف ومستبدل بأنظمة حديثة</p>
-                        <p><strong>الاستخدام:</strong> المرجع التاريخي وأغراض نقل البيانات</p>
+                        <p><strong>الوصف:</strong> النظام القديم لإدارة العملاء الذي كان يركز على المتابعة الفنية.</p>
+                        <p><strong>الحالة:</strong> مُلغى ومستبدل بنظام BSS</p>
+                        <p><strong>الاستخدام:</strong> المراقبة الفنية والمرجع التاريخي</p>
                     </div>
                 </div>
 
@@ -1094,26 +1203,28 @@
                     <div class="tool-header">
                         <div class="tool-info">
                             <h3>BSS - نظام دعم الأعمال</h3>
-                            <p>البديل الحديث لـ OSS</p>
+                            <p>النظام الحالي لإدارة العملاء</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
-                            <span class="feature-pill">إدارة العملاء</span>
-                            <span class="feature-pill">نظام الفواتير</span>
-                            <span class="feature-pill">تتبع الخدمات</span>
-                            <span class="feature-pill">التحليلات الفورية</span>
+                            <span class="feature-pill">بيانات العملاء والفواتير</span>
+                            <span class="feature-pill">تغيير الباقة</span>
+                            <span class="feature-pill">إنشاء SR/TT</span>
+                            <span class="feature-pill">استعلام الخط</span>
                         </div>
                     </div>
                     <button class="holo-btn" onclick="toggleDetails(this)">استكشف المميزات</button>
                     <div class="expandable-content">
-                        <p><strong>المميزات الأساسية:</strong></p>
+                        <p><strong>وظائف بروفايل العميل:</strong></p>
                         <ul style="margin: 10px 0; padding-right: 20px;">
-                            <li>إدارة علاقات العملاء المتقدمة</li>
-                            <li>معالجة الفواتير والمدفوعات الآلية</li>
-                            <li>تزويد الخدمات وتتبعها</li>
-                            <li>مراقبة الأداء في الوقت الفعلي</li>
-                            <li>مجموعة تقارير شاملة</li>
+                            <li>تجديد الفواتير ومعالجة المدفوعات</li>
+                            <li>تغيير الباقة والتعديلات</li>
+                            <li>إنشاء SR/TT (طلب خدمة/تذكرة مشكلة)</li>
+                            <li>اشتراكات الباقات الإضافية</li>
+                            <li>استعلام عن الخط وفحص الحالة</li>
+                            <li>إدارة اشتراك Option Back / Family Filter</li>
+                            <li>عمليات Barring/Suspend للخط</li>
                         </ul>
                     </div>
                 </div>
@@ -1122,27 +1233,33 @@
                     <div class="status-badge status-latest">الأحدث</div>
                     <div class="tool-header">
                         <div class="tool-info">
-                            <h3>CST360 - الحل الشامل</h3>
-                            <p>منصة متكاملة من الجيل القادم</p>
+                            <h3>CST360 - المنصة المتقدمة</h3>
+                            <p>نظام أكثر تطوراً من BSS</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
-                            <span class="feature-pill">ذكاء اصطناعي</span>
-                            <span class="feature-pill">رؤية شاملة</span>
-                            <span class="feature-pill">سحابي</span>
-                            <span class="feature-pill">خدمات مصغرة</span>
+                            <span class="feature-pill">استخراج سجلات الأخطاء</span>
+                            <span class="feature-pill">معلومات BRAS SP</span>
+                            <span class="feature-pill">كشف IP/MAC</span>
+                            <span class="feature-pill">حالة الخدمة</span>
                         </div>
                     </div>
                     <button class="holo-btn" onclick="toggleDetails(this)">اكتشف المزيد</button>
                     <div class="expandable-content">
-                        <p><strong>منصة ثورية:</strong></p>
+                        <p><strong>الوظائف المتقدمة:</strong></p>
                         <ul style="margin: 10px 0; padding-right: 20px;">
-                            <li>تحليلات تنبؤية مدعومة بالذكاء الاصطناعي</li>
-                            <li>رؤى شاملة للعملاء بزاوية 360 درجة</li>
-                            <li>هندسة سحابية أصلية</li>
-                            <li>قدرات أتمتة متقدمة</li>
-                            <li>يشمل أداة البحث NST</li>
+                            <li>استخراج Logs لتحليل الأخطاء</li>
+                            <li>تحديد معلومات BRAS SP</li>
+                            <li>جلب تفاصيل IP/MAC Address</li>
+                            <li>تحديد أقصى قدرة للخط على السرعة</li>
+                            <li>فحص حالة الخدمة: Data Up/Down</li>
+                            <li>مراقبة حالة Outage Up/Down</li>
+                            <li>تتبع أي Updates (من عملها وما تغير)</li>
+                            <li>عرض المتبقي من الباقة</li>
+                            <li>عمل Restart Port للخط</li>
+                            <li>فحص اشتراك Option Back أو Family Filter</li>
+                            <li>الحصول على WAN IP ورقم الحساب واسم المستخدم</li>
                         </ul>
                     </div>
                 </div>
@@ -1150,103 +1267,58 @@
                 <div class="tool-card" data-category="tool">
                     <div class="tool-header">
                         <div class="tool-info">
-                            <h3>NST - أداة البحث المتقدمة</h3>
-                            <p>مدمجة ضمن CST360</p>
+                            <h3>ADF - كشف الأعطال المتقدم</h3>
+                            <p>أداة كشف الأعطال الرئيسية</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
-                            <span class="feature-pill">بحث عميق</span>
-                            <span class="feature-pill">تنقيب البيانات</span>
-                            <span class="feature-pill">تقارير مخصصة</span>
-                            <span class="feature-pill">رؤى ذكية</span>
+                            <span class="feature-pill">كشف الأعطال الرئيسية</span>
+                            <span class="feature-pill">تحليل الخط</span>
+                            <span class="feature-pill">تحديد العطل</span>
                         </div>
                     </div>
                     <button class="holo-btn" onclick="toggleDetails(this)">اعرف المزيد</button>
                     <div class="expandable-content">
-                        <p><strong>محرك بحث قوي:</strong></p>
+                        <p><strong>أداة كشف الأعطال:</strong></p>
                         <ul style="margin: 10px 0; padding-right: 20px;">
-                            <li>استعلام متقدم لقواعد البيانات</li>
-                            <li>تعرف على الأنماط بالتعلم الآلي</li>
-                            <li>إنشاء تقارير مخصصة</li>
-                            <li>تحليل البيانات في الوقت الفعلي</li>
-                            <li>استعلامات ملف تعريف LDAP</li>
-                            <li>تتبع جلسات AAA</li>
+                            <li>تحدد وجود Major Fault على خط العميل</li>
+                            <li>تشخيص وتحليل متقدم للخطوط</li>
+                            <li>مراقبة وكشف الأعطال في الوقت الفعلي</li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="tool-card" data-category="monitoring">
+                <div class="tool-card" data-category="assla">
                     <div class="tool-header">
                         <div class="tool-info">
-                            <h3>مراقبة النظام</h3>
-                            <p>تتبع أداء النظام في الوقت الفعلي</p>
+                            <h3>ASSIA Tools - جودة وكفاءة الخط</h3>
+                            <p>اختبار وتحسين الخطوط المتقدم</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
-                            <span class="feature-pill">مقاييس الأداء</span>
-                            <span class="feature-pill">التنبيهات</span>
-                            <span class="feature-pill">فحص السلامة</span>
+                            <span class="feature-pill">توصية الخدمة</span>
+                            <span class="feature-pill">تحسين البروفايل</span>
+                            <span class="feature-pill">طول الحلقة</span>
+                            <span class="feature-pill">تحليل XELT</span>
                         </div>
                     </div>
-                    <button class="holo-btn" onclick="toggleDetails(this)">عرض المراقبة</button>
+                    <button class="holo-btn" onclick="toggleDetails(this)">تحسين الخدمات</button>
                     <div class="expandable-content">
-                        <p><strong>قدرات المراقبة:</strong></p>
+                        <p><strong>مميزات اختبار الخط:</strong></p>
                         <ul style="margin: 10px 0; padding-right: 20px;">
-                            <li>مراقبة صحة النظام في الوقت الفعلي</li>
-                            <li>أنظمة التنبيه الآلية</li>
-                            <li>لوحة معلومات تحليلات الأداء</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tool-card" data-category="reports">
-                    <div class="tool-header">
-                        <div class="tool-info">
-                            <h3>أداة التقارير/الحالات</h3>
-                            <p>إعداد التقارير الشامل وإدارة الحالات</p>
-                        </div>
-                    </div>
-                    <div class="features-container">
-                        <div class="feature-pills">
-                            <span class="feature-pill">حالات TTS</span>
-                            <span class="feature-pill">التذاكر المؤجلة</span>
-                            <span class="feature-pill">طابور الألعاب</span>
-                        </div>
-                    </div>
-                    <button class="holo-btn" onclick="toggleDetails(this)">الوصول للتقارير</button>
-                    <div class="expandable-content">
-                        <p><strong>الوظائف المتاحة:</strong></p>
-                        <ul style="margin: 10px 0; padding-right: 20px;">
-                            <li>إدارة حالات TTS</li>
-                            <li>إنشاء تذاكر مؤجلة</li>
-                            <li>إنشاء تذكرة طابور الألعاب</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="tool-card" data-category="operations">
-                    <div class="tool-header">
-                        <div class="tool-info">
-                            <h3>إدارة العمليات (OM)</h3>
-                            <p>الإجراءات التشغيلية الأساسية</p>
-                        </div>
-                    </div>
-                    <div class="features-container">
-                        <div class="feature-pills">
-                            <span class="feature-pill">مهام فنية</span>
-                            <span class="feature-pill">البنية التحتية</span>
-                            <span class="feature-pill">الصيانة</span>
-                        </div>
-                    </div>
-                    <button class="holo-btn" onclick="toggleDetails(this)">إدارة العمليات</button>
-                    <div class="expandable-content">
-                        <p><strong>مميزات التشغيل:</strong></p>
-                        <ul style="margin: 10px 0; padding-right: 20px;">
-                            <li>إدارة البنية التحتية</li>
-                            <li>مهام الصيانة الفنية</li>
-                            <li>إجراءات تحسين النظام</li>
+                            <li>Service Recommendation → تقييم كفاءة الخط</li>
+                            <li>Profile Optimization (PO) → تشغيل/فحص الـ PO</li>
+                            <li>Line Summary → Loop Length → بعد العميل عن السنترال</li>
+                            <li>Clear View → Run ASSIA → تشغيل الأداة</li>
+                            <li>Line Details → Dispatch Score → معدل العزل</li>
+                            <li>Operational Data → Real-time → متابعة مباشرة</li>
+                            <li>تحديد نوع الراوتر (– < +)</li>
+                            <li>DSL → XELT Analysis → Perform XELT → فحص الإشارة من البوكس/السنترال</li>
+                            <li>DSL → Realtime Traffic → متابعة السرعة أثناء التحميل</li>
+                            <li>Real Time PO لمشاكل السرعة</li>
+                            <li>DSL → XELT Analysis → Run SELT → اختبار جودة الخط</li>
                         </ul>
                     </div>
                 </div>
@@ -1255,23 +1327,51 @@
                     <div class="tool-header">
                         <div class="tool-info">
                             <h3>TTS - نظام تتبع التذاكر</h3>
-                            <p>إدارة التذاكر المتقدمة</p>
+                            <p>إدارة الشكاوى والتذاكر الفنية</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
+                            <span class="feature-pill">إدارة الشكاوى</span>
                             <span class="feature-pill">التذاكر الفنية</span>
-                            <span class="feature-pill">سجلات العناصر</span>
-                            <span class="feature-pill">التحديثات</span>
+                            <span class="feature-pill">تحديثات الحالة</span>
+                            <span class="feature-pill">توجيه الأقسام</span>
                         </div>
                     </div>
                     <button class="holo-btn" onclick="toggleDetails(this)">تتبع التذاكر</button>
                     <div class="expandable-content">
-                        <p><strong>إدارة التذاكر:</strong></p>
+                        <p><strong>وظائف TTS:</strong></p>
                         <ul style="margin: 10px 0; padding-right: 20px;">
-                            <li>تتبع جميع التذاكر الفنية</li>
-                            <li>سجلات العناصر وتحديثات الحالة</li>
-                            <li>توجيه التذاكر الآلي</li>
+                            <li>رفع الشكاوى والـ Trouble Tickets</li>
+                            <li>متابعة التحديثات الخاصة بالشكوى</li>
+                            <li>كتابة Update عند حدوث تغيير</li>
+                            <li>إرسال التحديث للقسم المختص</li>
+                            <li>إدارة دورة حياة التذكرة الكاملة</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tool-card" data-category="reports">
+                    <div class="tool-header">
+                        <div class="tool-info">
+                            <h3>IR - أداة تقرير الحوادث</h3>
+                            <p>إنشاء التقارير وإدارة TT/SR</p>
+                        </div>
+                    </div>
+                    <div class="features-container">
+                        <div class="feature-pills">
+                            <span class="feature-pill">تقارير الحوادث</span>
+                            <span class="feature-pill">إنشاء TT</span>
+                            <span class="feature-pill">إدارة SR</span>
+                        </div>
+                    </div>
+                    <button class="holo-btn" onclick="toggleDetails(this)">الوصول للتقارير</button>
+                    <div class="expandable-content">
+                        <p><strong>وظائف التقارير:</strong></p>
+                        <ul style="margin: 10px 0; padding-right: 20px;">
+                            <li>عمل Report شامل للحوادث</li>
+                            <li>إنشاء TT/SR (Incident Report)</li>
+                            <li>توثيق وتتبع الحوادث</li>
                         </ul>
                     </div>
                 </div>
@@ -1279,50 +1379,107 @@
                 <div class="tool-card" data-category="hdm">
                     <div class="tool-header">
                         <div class="tool-info">
-                            <h3>HDM - إدارة أجهزة الشبكة</h3>
-                            <p>تكوين أجهزة الشبكة</p>
+                            <h3>HDM - مدير الأجهزة المنزلية</h3>
+                            <p>التحكم الكامل في راوتر العميل</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
-                            <span class="feature-pill">إدارة CPE</span>
-                            <span class="feature-pill">إعدادات WiFi</span>
-                            <span class="feature-pill">تكوين DHCP</span>
+                            <span class="feature-pill">إعادة تشغيل الراوتر</span>
+                            <span class="feature-pill">مراقبة الحالة</span>
+                            <span class="feature-pill">تغيير كلمة السر</span>
+                            <span class="feature-pill">إعداد DNS/MTU</span>
                         </div>
                     </div>
                     <button class="holo-btn" onclick="toggleDetails(this)">تكوين الأجهزة</button>
                     <div class="expandable-content">
-                        <p><strong>إدارة الأجهزة:</strong></p>
+                        <p><strong>إدارة الراوتر:</strong></p>
                         <ul style="margin: 10px 0; padding-right: 20px;">
-                            <li>تكوين نوع CPE</li>
-                            <li>إدارة إعدادات WiFi</li>
-                            <li>إعدادات DHCP وتغيير البوابة</li>
-                            <li>إعادة تعيين CPE وإعادة تشغيل الأجهزة</li>
+                            <li>عمل Restart للراوتر عن بُعد</li>
+                            <li>معرفة حالة الراوتر: On/Off</li>
+                            <li>معرفة مدة تشغيل الـ ADSL</li>
+                            <li>تغيير الباسورد</li>
+                            <li>معرفة نوع الراوتر وموديله</li>
+                            <li>تغيير DNS أو MTU</li>
+                            <li>حل مشاكل الراوتر عن بُعد لدعم العملاء</li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="tool-card" data-category="assla">
+                <div class="tool-card" data-category="operations">
                     <div class="tool-header">
                         <div class="tool-info">
-                            <h3>أصلة - أدوات الخدمات</h3>
-                            <p>إدارة الخدمات المتقدمة</p>
+                            <h3>Teckt Maker - دليل الحلول المنطقية</h3>
+                            <p>إرشادات حل المشاكل خطوة بخطوة</p>
                         </div>
                     </div>
                     <div class="features-container">
                         <div class="feature-pills">
-                            <span class="feature-pill">توصيات الخدمة</span>
-                            <span class="feature-pill">تحسين الملف</span>
-                            <span class="feature-pill">إدارة DSL</span>
+                            <span class="feature-pill">التحليل المنطقي</span>
+                            <span class="feature-pill">التشخيص الفيزيائي</span>
+                            <span class="feature-pill">دليل خطوة بخطوة</span>
+                            <span class="feature-pill">دعم العملاء</span>
                         </div>
                     </div>
-                    <button class="holo-btn" onclick="toggleDetails(this)">تحسين الخدمات</button>
+                    <button class="holo-btn" onclick="toggleDetails(this)">إدارة العمليات</button>
                     <div class="expandable-content">
-                        <p><strong>مميزات الخدمة:</strong></p>
+                        <p><strong>مميزات حل المشاكل:</strong></p>
                         <ul style="margin: 10px 0; padding-right: 20px;">
-                            <li>محرك توصيات الخدمة</li>
-                            <li>تحسين سرعة الملف الشخصي</li>
-                            <li>إدارة تبويب DSL</li>
+                            <li>يرشد خطوات الحل المنطقي لأي مشكلة</li>
+                            <li>يحدد إذا كانت المشكلة منطقية (نظام/إعدادات) أو فيزيائية (سلك/جهاز)</li>
+                            <li>يوفر إرشادات خطوة بخطوة للتعامل مع العميل</li>
+                            <li>منهجية استكشاف الأخطاء المنظمة</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tool-card" data-category="monitoring">
+                    <div class="tool-header">
+                        <div class="tool-info">
+                            <h3>OM - إدارة الطلبات</h3>
+                            <p>تتبع الاشتراكات والطلبات</p>
+                        </div>
+                    </div>
+                    <div class="features-container">
+                        <div class="feature-pills">
+                            <span class="feature-pill">الطلبات الجديدة</span>
+                            <span class="feature-pill">إلغاء الخدمة</span>
+                            <span class="feature-pill">ADSL إلى فايبر</span>
+                        </div>
+                    </div>
+                    <button class="holo-btn" onclick="toggleDetails(this)">عرض المراقبة</button>
+                    <div class="expandable-content">
+                        <p><strong>وظائف إدارة الطلبات:</strong></p>
+                        <ul style="margin: 10px 0; padding-right: 20px;">
+                            <li>متابعة أي Order جديد</li>
+                            <li>معالجة إلغاء الخدمة</li>
+                            <li>التعامل مع تحويل من ADSL عادي إلى Fiber</li>
+                            <li>إدارة دورة حياة الاشتراك الكاملة</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tool-card" data-category="matrix">
+                    <div class="tool-header">
+                        <div class="tool-info">
+                            <h3>Matrix - إدارة خطوط TDM</h3>
+                            <p>شبيه بـ CST ولكن متخصص لخطوط TDM</p>
+                        </div>
+                    </div>
+                    <div class="features-container">
+                        <div class="feature-pills">
+                            <span class="feature-pill">خطوط TDM</span>
+                            <span class="feature-pill">مراقبة متخصصة</span>
+                            <span class="feature-pill">تحليل الخطوط</span>
+                        </div>
+                    </div>
+                    <button class="holo-btn" onclick="toggleDetails(this)">إدارة TDM</button>
+                    <div class="expandable-content">
+                        <p><strong>إدارة TDM:</strong></p>
+                        <ul style="margin: 10px 0; padding-right: 20px;">
+                            <li>أداة متخصصة لنوع خطوط TDM</li>
+                            <li>وظائف مشابهة لـ CST360</li>
+                            <li>مراقبة وتحليل مخصص لخطوط TDM</li>
                         </ul>
                     </div>
                 </div>
@@ -1330,14 +1487,14 @@
         </div>
     </div>
 
-  
+    <!-- Floating Action Menu -->
     <div class="floating-menu">
         <div class="fab-container">
             <button class="fab" onclick="toggleAIAssistant()">🤖</button>
         </div>
     </div>
 
-   
+    <!-- AI Assistant -->
     <div class="ai-assistant" id="aiAssistant">
         <div class="ai-header">
             <div class="ai-avatar">🤖</div>
@@ -1350,7 +1507,6 @@
             <p id="aiMessage">Welcome to the Advanced Tech Dashboard! I can help you navigate through our systems and tools.</p>
         </div>
     </div>
--->
 
     <!-- Notification -->
     <div class="notification" id="notification">
@@ -1420,6 +1576,87 @@
             }
         }
 
+        // Search Functionality
+        function performSearch() {
+            const isArabic = document.body.dir === 'rtl';
+            const searchInput = isArabic ? document.getElementById('searchInputAr') : document.getElementById('searchInput');
+            const query = searchInput.value.toLowerCase().trim();
+            
+            if (!query) {
+                showNotification(
+                    isArabic ? 'تنبيه' : 'Alert', 
+                    isArabic ? 'من فضلك أدخل كلمة للبحث' : 'Please enter a search term'
+                );
+                return;
+            }
+
+            const toolCards = document.querySelectorAll('.tool-card');
+            let foundCount = 0;
+
+            toolCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'block';
+                    card.style.animation = 'highlightFound 1s ease-in-out';
+                    foundCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show search results notification
+            const title = isArabic ? 'نتائج البحث' : 'Search Results';
+            const message = isArabic ? 
+                `تم العثور على ${foundCount} نتيجة` : 
+                `Found ${foundCount} result${foundCount !== 1 ? 's' : ''}`;
+            
+            showNotification(title, message);
+
+            // Add clear search button if results found
+            if (foundCount > 0) {
+                addClearSearchButton(isArabic);
+            }
+        }
+
+        function addClearSearchButton(isArabic) {
+            const existingBtn = document.getElementById('clearSearchBtn');
+            if (existingBtn) existingBtn.remove();
+
+            const clearBtn = document.createElement('button');
+            clearBtn.id = 'clearSearchBtn';
+            clearBtn.className = 'holo-btn';
+            clearBtn.textContent = isArabic ? 'مسح البحث' : 'Clear Search';
+            clearBtn.style.position = 'fixed';
+            clearBtn.style.top = '140px';
+            clearBtn.style.right = isArabic ? 'auto' : '20px';
+            clearBtn.style.left = isArabic ? '20px' : 'auto';
+            clearBtn.style.zIndex = '1000';
+            clearBtn.onclick = clearSearch;
+            document.body.appendChild(clearBtn);
+        }
+
+        function clearSearch() {
+            const toolCards = document.querySelectorAll('.tool-card');
+            toolCards.forEach(card => {
+                card.style.display = 'block';
+                card.style.animation = '';
+            });
+
+            // Clear search inputs
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchInputAr').value = '';
+
+            // Remove clear button
+            const clearBtn = document.getElementById('clearSearchBtn');
+            if (clearBtn) clearBtn.remove();
+
+            const isArabic = document.body.dir === 'rtl';
+            showNotification(
+                isArabic ? 'تم المسح' : 'Cleared', 
+                isArabic ? 'تم إظهار جميع الأدوات' : 'All tools are now visible'
+            );
+        }
+
         // Toggle Details Function
         function toggleDetails(button) {
             const card = button.closest('.tool-card');
@@ -1473,7 +1710,7 @@
                         switch(system) {
                             case 'oss':
                                 title = 'نظام OSS';
-                                message = 'نظام دعم العمليات القديم - متوقف الآن';
+                                message = 'النظام القديم لإدارة العملاء - مُلغى الآن';
                                 break;
                             case 'bss':
                                 title = 'نظام BSS';
@@ -1481,14 +1718,14 @@
                                 break;
                             case 'cst360':
                                 title = 'منصة CST360';
-                                message = 'أحدث منصة متكاملة مع تقنيات الذكاء الاصطناعي';
+                                message = 'أحدث منصة متكاملة مع تقنيات متقدمة';
                                 break;
                         }
                     } else {
                         switch(system) {
                             case 'oss':
                                 title = 'OSS System';
-                                message = 'Legacy Operations Support System - Now deprecated';
+                                message = 'Legacy Customer Management System - Now deprecated';
                                 break;
                             case 'bss':
                                 title = 'BSS System';
@@ -1496,13 +1733,35 @@
                                 break;
                             case 'cst360':
                                 title = 'CST360 Platform';
-                                message = 'Latest integrated platform with AI capabilities';
+                                message = 'Latest integrated platform with advanced capabilities';
                                 break;
                         }
                     }
                     
                     showNotification(title, message);
                 });
+            });
+
+            // Search on Enter key
+            const searchInputs = ['searchInput', 'searchInputAr'];
+            searchInputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            performSearch();
+                        }
+                    });
+                    
+                    // Real-time search
+                    input.addEventListener('input', function(e) {
+                        if (e.target.value.length > 2) {
+                            performSearch();
+                        } else if (e.target.value === '') {
+                            clearSearch();
+                        }
+                    });
+                }
             });
         });
 
