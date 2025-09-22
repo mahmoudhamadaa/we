@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Professional Question Bank - Technical Assessment</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -10,6 +10,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
     
     :root {
@@ -34,6 +35,8 @@
       padding: 20px;
       color: var(--text-primary);
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     
     .background-decoration {
@@ -58,40 +61,47 @@
     
     .header {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
       animation: slideDown 0.8s ease-out;
     }
     
     .header h1 {
       color: white;
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
       font-weight: 800;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       text-shadow: 0 4px 20px rgba(0,0,0,0.3);
       letter-spacing: -0.02em;
     }
     
     .header .subtitle {
       color: rgba(255, 255, 255, 0.9);
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 400;
-      margin-bottom: 30px;
+      margin-bottom: 15px;
     }
     
     .search-section {
       position: sticky;
-      top: 20px;
+      top: 80px;
       z-index: 100;
-      margin-bottom: 40px;
+      margin-bottom: 25px;
       animation: slideUp 0.8s ease-out 0.2s both;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 15px;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
     
     .search-container {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 15px;
       flex-wrap: wrap;
       align-items: center;
+      margin-bottom: 15px;
     }
     
     .search-wrapper {
@@ -102,27 +112,27 @@
     
     .search-icon {
       position: absolute;
-      left: 20px;
+      left: 16px;
       top: 50%;
       transform: translateY(-50%);
       color: var(--text-secondary);
-      font-size: 20px;
+      font-size: 18px;
       z-index: 2;
     }
     
     .search-box {
       width: 100%;
-      padding: 18px 20px 18px 55px;
+      padding: 16px 16px 16px 45px;
       font-size: 16px;
       font-weight: 500;
-      border: none;
-      border-radius: 50px;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      background: white;
       box-shadow: var(--shadow-soft);
       outline: none;
       transition: var(--transition);
       color: var(--text-primary);
+      min-height: 48px;
     }
     
     .search-box::placeholder {
@@ -132,23 +142,231 @@
     
     .search-box:focus {
       background: white;
-      box-shadow: var(--shadow-hover);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3), var(--shadow-hover);
+      border-color: var(--accent-color);
       transform: translateY(-2px);
+    }
+    
+    /* Keywords Filter Section */
+    .filter-section {
+      margin-top: 15px;
+    }
+    
+    .filter-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      cursor: pointer;
+      user-select: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      transition: background 0.2s ease;
+    }
+    
+    .filter-header:hover {
+      background: rgba(79, 70, 229, 0.05);
+    }
+    
+    .filter-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .filter-toggle {
+      background: var(--accent-color);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+    
+    .filter-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .filter-content.expanded {
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    
+    .filter-content.expanded .keywords-grid {
+      padding: 12px 0;
+    }
+    
+    .keywords-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+      padding: 0;
+      transition: padding 0.3s ease;
+    }
+    
+    .keyword-tag {
+      background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+      border: 2px solid transparent;
+      color: var(--text-secondary);
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      text-transform: capitalize;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      position: relative;
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+    
+    .keyword-tag::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .keyword-tag:hover::before {
+      left: 100%;
+    }
+    
+    .keyword-tag:hover {
+      background: linear-gradient(135deg, var(--accent-color), #6366f1);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+      border-color: var(--accent-color);
+    }
+    
+    .keyword-tag:active {
+      transform: translateY(0);
+    }
+    
+    .keyword-tag.active {
+      background: var(--accent-color);
+      color: white;
+      border-color: #4338ca;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+    }
+    
+    .clear-filters {
+      margin-top: 12px;
+      text-align: center;
+    }
+    
+    .clear-btn {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      touch-action: manipulation;
+    }
+    
+    .clear-btn:hover {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    }
+    
+    .clear-btn:active {
+      transform: translateY(0);
+    }
+    
+    .active-filters {
+      margin: 12px 0;
+      padding: 10px;
+      background: rgba(79, 70, 229, 0.1);
+      border-radius: 10px;
+      border: 1px solid rgba(79, 70, 229, 0.2);
+    }
+    
+    .active-filters-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-color);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .active-filters-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    
+    .active-filter-tag {
+      background: var(--accent-color);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .remove-filter {
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      color: white;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      touch-action: manipulation;
+    }
+    
+    .remove-filter:hover {
+      background: rgba(255, 255, 255, 0.5);
     }
     
     .stats-card {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(20px);
-      padding: 16px 24px;
-      border-radius: 50px;
+      padding: 12px 18px;
+      border-radius: 40px;
       color: var(--text-primary);
       font-weight: 600;
       box-shadow: var(--shadow-soft);
       transition: var(--transition);
       white-space: nowrap;
+      font-size: 14px;
     }
     
     .stats-card:hover {
@@ -159,10 +377,10 @@
     .stats-number {
       background: var(--primary-gradient);
       color: white;
-      padding: 6px 12px;
-      border-radius: 20px;
+      padding: 4px 10px;
+      border-radius: 16px;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 12px;
     }
     
     .questions-grid {
@@ -275,6 +493,7 @@
       cursor: pointer;
       position: relative;
       overflow: hidden;
+      touch-action: manipulation;
     }
     
     .option:hover {
@@ -399,7 +618,13 @@
     
     @media (max-width: 768px) {
       body {
+        padding: 10px;
+      }
+      
+      .search-section {
+        top: 70px;
         padding: 15px;
+        position: sticky;
       }
       
       .questions-grid {
@@ -409,25 +634,81 @@
       
       .search-container {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
       }
       
       .search-wrapper {
         max-width: 100%;
       }
       
+      .search-box {
+        font-size: 16px;
+        padding: 14px 14px 14px 42px;
+        min-height: 46px;
+      }
+      
+      .search-icon {
+        font-size: 16px;
+        left: 14px;
+      }
+      
       .stats-card {
         order: -1;
         width: 100%;
         justify-content: center;
+        padding: 10px 16px;
+        font-size: 13px;
       }
       
       .question-card {
-        padding: 24px;
+        padding: 20px;
       }
       
       .header h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
+      }
+      
+      .header .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+      }
+      
+      .keywords-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 6px;
+      }
+      
+      .keyword-tag {
+        font-size: 11px;
+        padding: 6px 10px;
+        min-height: 30px;
+      }
+      
+      .filter-content.expanded {
+        max-height: 200px;
+      }
+      
+      .glass-header {
+        height: 55px;
+        top: 8px;
+        padding: 0 15px;
+      }
+      
+      .logo {
+        font-size: 18px;
+      }
+      
+      .glass-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+      }
+      
+      .nav-buttons {
+        gap: 8px;
+      }
+      
+      .container {
+        padding-top: 75px;
       }
     }
     
@@ -441,324 +722,403 @@
       }
       
       .search-box {
-        padding: 16px 18px 16px 50px;
+        padding: 16px 16px 16px 48px;
+        font-size: 16px;
+        min-height: 52px;
+      }
+      
+      .search-icon {
+        left: 16px;
+      }
+      
+      .keywords-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 6px;
+      }
+      
+      .keyword-tag {
+        font-size: 11px;
+        padding: 6px 10px;
+        min-height: 32px;
+      }
+      
+      .glass-header {
+        padding: 0 15px;
+        height: 65px;
+        top: 10px;
+      }
+      
+      .search-section {
+        top: 80px;
+        padding: 15px;
+      }
+      
+      .container {
+        padding-top: 100px;
+      }
+      
+      .filter-header {
+        padding: 8px 12px;
+      }
+      
+      .filter-title {
+        font-size: 15px;
+      }
+      
+      .clear-btn {
+        padding: 8px 20px;
+        font-size: 13px;
       }
     }
+      
+    .glass-header {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 95%;
+      max-width: 1200px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 25px;
+      z-index: 1000;
+      box-shadow: 
+          0 8px 32px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4),
+          0 0 60px rgba(100, 200, 255, 0.2);
+      transition: all 0.3s ease;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .glass-header:hover {
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 
+          0 12px 40px rgba(0, 0, 0, 0.15),
+          inset 0 1px 0 rgba(255, 255, 255, 0.5),
+          0 0 80px rgba(100, 200, 255, 0.3);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0px); }
+      50% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .glass-btn {
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      color: #333;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      touch-action: manipulation;
+    }
+
+    .glass-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .glass-btn:hover::before {
+      left: 100%;
+    }
+
+    .glass-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 
+          0 8px 25px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .glass-btn:active {
+      transform: translateY(0);
+    }
+
+    .cmd-btn {
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 142, 83, 0.2));
+      border: 1px solid rgba(255, 107, 107, 0.3);
+    }
+
+    .cmd-btn:hover {
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.3), rgba(255, 142, 83, 0.3));
+      box-shadow: 0 8px 25px rgba(255, 107, 107, 0.2);
+    }
+
+    .tools-btn {
+      background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(80, 227, 194, 0.2));
+      border: 1px solid rgba(74, 144, 226, 0.3);
+    }
+
+    .tools-btn:hover {
+      background: linear-gradient(135deg, rgba(74, 144, 226, 0.3), rgba(80, 227, 194, 0.3));
+      box-shadow: 0 8px 25px rgba(74, 144, 226, 0.2);
+    }
+
+    .glass-footer {
+      margin: 20px;
+      margin-top: auto;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 25px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 
+          0 8px 32px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-footer::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, 
+          rgba(255, 107, 107, 0.3) 0%, 
+          rgba(74, 144, 226, 0.3) 25%, 
+          rgba(80, 227, 194, 0.3) 50%, 
+          rgba(255, 142, 83, 0.3) 75%, 
+          rgba(255, 107, 107, 0.3) 100%);
+      border-radius: 25px;
+      z-index: -1;
+    }
+
+    .footer-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-name {
+      font-size: 36px;
+      font-weight: bold;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 15px;
+      text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+      animation: nameGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes nameGlow {
+      0% { filter: brightness(1) saturate(1); }
+      100% { filter: brightness(1.2) saturate(1.3); }
+    }
+
+    .footer-title {
+      font-size: 22px;
+      color: #555;
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .footer-description {
+      font-size: 16px;
+      color: #777;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+      font-style: italic;
+    }
+
+    .sparkle {
+      display: inline-block;
+      color: #ffd700;
+      margin: 0 5px;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.6) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float-particle 15s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float-particle {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive Design for Mobile */
+    @media (max-width: 768px) {
       .glass-header {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 95%;
-            max-width: 1200px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 30px;
-            z-index: 1000;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4),
-                0 0 60px rgba(100, 200, 255, 0.2);
-            transition: all 0.3s ease;
-            animation: float 6s ease-in-out infinite;
-        }
+        width: 90%;
+        padding: 0 15px;
+        height: 55px;
+      }
 
-        .glass-header:hover {
-            transform: translateX(-50%) translateY(-2px);
-            box-shadow: 
-                0 12px 40px rgba(0, 0, 0, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.5),
-                0 0 80px rgba(100, 200, 255, 0.3);
-        }
+      .logo {
+        font-size: 18px;
+      }
 
-        @keyframes float {
-            0%, 100% { transform: translateX(-50%) translateY(0px); }
-            50% { transform: translateX(-50%) translateY(-5px); }
-        }
+      .glass-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+      }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
-        }
+      .nav-buttons {
+        gap: 8px;
+      }
 
-        .nav-buttons {
-            display: flex;
-            gap: 15px;
-        }
+      .glass-footer {
+        margin: 10px;
+        padding: 25px 15px;
+      }
 
-        .glass-btn {
-            padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            color: #333;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
+      .footer-name {
+        font-size: 24px;
+      }
 
-        .glass-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .glass-btn:hover::before {
-            left: 100%;
-        }
-
-        .glass-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-            box-shadow: 
-                0 8px 25px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.6);
-        }
-
-        .glass-btn:active {
-            transform: translateY(0);
-        }
-
-        /* CMD Button Special Effect */
-        .cmd-btn {
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 142, 83, 0.2));
-            border: 1px solid rgba(255, 107, 107, 0.3);
-        }
-
-        .cmd-btn:hover {
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.3), rgba(255, 142, 83, 0.3));
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.2);
-        }
-
-        /* TOOLS Button Special Effect */
-        .tools-btn {
-            background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(80, 227, 194, 0.2));
-            border: 1px solid rgba(74, 144, 226, 0.3);
-        }
-
-        .tools-btn:hover {
-            background: linear-gradient(135deg, rgba(74, 144, 226, 0.3), rgba(80, 227, 194, 0.3));
-            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.2);
-        }
-
-        /* Main Content Area */
-        .main-content {
-            flex: 1;
-            padding: 120px 20px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .content-placeholder {
-            max-width: 800px;
-            padding: 60px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .content-placeholder h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #e7e7e7 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .content-placeholder p {
-            font-size: 18px;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Glass Footer */
-        .glass-footer {
-            margin: 20px;
-            margin-top: auto;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 25px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-footer::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, 
-                rgba(255, 107, 107, 0.3) 0%, 
-                rgba(74, 144, 226, 0.3) 25%, 
-                rgba(80, 227, 194, 0.3) 50%, 
-                rgba(255, 142, 83, 0.3) 75%, 
-                rgba(255, 107, 107, 0.3) 100%);
-            border-radius: 25px;
-            z-index: -1;
-            animation: gradientRotate 8s linear infinite;
-        }
-
-        /* @keyframes gradientRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        } */
-
-        .footer-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-name {
-            font-size: 36px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px;
-            text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
-            animation: nameGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes nameGlow {
-            0% { filter: brightness(1) saturate(1); }
-            100% { filter: brightness(1.2) saturate(1.3); }
-        }
-
-        .footer-title {
-            font-size: 22px;
-            color: #555;
-            font-weight: 600;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .footer-description {
-            font-size: 16px;
-            color: #777;
-            line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto;
-            font-style: italic;
-        }
-
-        .sparkle {
-            display: inline-block;
-            color: #ffd700;
-            margin: 0 5px;
-        }
-
-        /* @keyframes sparkle {
-            0% { transform: scale(1) rotate(0deg); opacity: 0.8; }
-            100% { transform: scale(1.2) rotate(180deg); opacity: 1; }
-        } */
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .glass-header {
-                width: 90%;
-                padding: 0 20px;
-                height: 70px;
-            }
-
-            .logo {
-                font-size: 20px;
-            }
-
-            .glass-btn {
-                padding: 10px 18px;
-                font-size: 13px;
-            }
-
-            .nav-buttons {
-                gap: 10px;
-            }
-
-            .content-placeholder {
-                padding: 40px 20px;
-                margin: 0 10px;
-            }
-
-            .content-placeholder h1 {
-                font-size: 36px;
-            }
-
-            .glass-footer {
-                margin: 10px;
-                padding: 30px 20px;
-            }
-
-            .footer-name {
-                font-size: 28px;
-            }
-
-            .footer-title {
-                font-size: 18px;
-            }
-        }
-
-        /* Floating particles effect */
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.6) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float-particle 15s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes float-particle {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
+      .footer-title {
+        font-size: 16px;
+      }
+      
+      .footer-description {
+        font-size: 14px;
+      }
+    }
+    @media (max-width: 480px) {
+      .questions-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .question-card {
+        padding: 16px;
+      }
+      
+      .search-box {
+        padding: 12px 12px 12px 38px;
+        font-size: 16px;
+        min-height: 44px;
+      }
+      
+      .search-icon {
+        left: 12px;
+        font-size: 14px;
+      }
+      
+      .keywords-grid {
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        gap: 5px;
+      }
+      
+      .keyword-tag {
+        font-size: 10px;
+        padding: 5px 8px;
+        min-height: 28px;
+      }
+      
+      .glass-header {
+        padding: 0 12px;
+        height: 50px;
+        top: 5px;
+      }
+      
+      .search-section {
+        top: 58px;
+        padding: 12px;
+      }
+      
+      .container {
+        padding-top: 65px;
+      }
+      
+      .filter-header {
+        padding: 6px 8px;
+      }
+      
+      .filter-title {
+        font-size: 13px;
+      }
+      
+      .clear-btn {
+        padding: 6px 14px;
+        font-size: 11px;
+      }
+      
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .header .subtitle {
+        font-size: 0.85rem;
+      }
+      
+      .logo {
+        font-size: 16px;
+      }
+      
+      .glass-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+      }
+      
+      .stats-card {
+        padding: 8px 14px;
+        font-size: 12px;
+      }
+      
+      .stats-number {
+        padding: 3px 8px;
+        font-size: 11px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -778,12 +1138,12 @@
     <header class="glass-header">
         <div class="logo">MH.DEV</div>
         <nav class="nav-buttons">
-     <a href="./cmd.html">  <button class="glass-btn cmd-btn">CMD</button></a>
-       <a href="./TOOLS.html"><button class="glass-btn tools-btn">TOOLS</button></a>
+     <a href="./cmd.html" class="glass-btn cmd-btn">CMD</a>
+       <a href="./TOOLS.html" class="glass-btn tools-btn">TOOLS</a>
         </nav>
     </header>
   
-  <div class="container" style="padding-top: 120px;">
+  <div class="container" style="padding-top: 85px;">
     <header class="header">
       <h1>🎯 Professional Question Bank</h1>
       <p class="subtitle">Technical Assessment & Knowledge Base</p>
@@ -794,12 +1154,38 @@
         <div class="search-wrapper">
           <div class="search-icon">🔍</div>
           <input type="text" id="searchInput" class="search-box" 
-                 placeholder="Search questions, options, or answers... (e.g., BLQ, voice down, physical instability)">
+                 placeholder="Search questions, options, or answers...">
         </div>
         
         <div class="stats-card">
           <span class="stats-number" id="questionCount">0</span>
           <span>Questions</span>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-header" onclick="toggleFilter()">
+          <div class="filter-title">
+            <span>🏷️</span>
+            <span>Quick Search Keywords</span>
+          </div>
+          <div class="filter-toggle" id="filterToggle">+</div>
+        </div>
+        
+        <div class="filter-content" id="filterContent">
+          <div class="keywords-grid" id="keywordsGrid">
+            <!-- Keywords will be generated here -->
+          </div>
+          <div class="clear-filters">
+            <button class="clear-btn" onclick="clearAllFilters()">Clear All Filters</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="active-filters" id="activeFilters" style="display: none;">
+        <div class="active-filters-title">Active Filters:</div>
+        <div class="active-filters-list" id="activeFiltersList">
+          <!-- Active filters will appear here -->
         </div>
       </div>
     </section>
@@ -814,6 +1200,7 @@
       <p style="margin-top: 10px; font-size: 16px; opacity: 0.8;">Try different keywords or check your spelling</p>
     </div>
   </div>
+
 <footer class="glass-footer">
         <div class="footer-content">
             <h2 class="footer-name">Mahmoud Hamada</h2>
@@ -828,7 +1215,24 @@
             </p>
         </div>
     </footer>
+
   <script>
+    // Keywords array for filtering
+    const keywords = [
+      "blq", "logical instability", "data down", "speed", "voice down", "physical instability",
+      "wcap", "need optimization", "wrong card and port", "technical visit", "maintenance",
+      "outage", "barring", "selt", "assia", "clear view", "splitter", "adsl", "vdsl",
+      "wifi", "wireless", "concession", "compensate", "slowness", "bss", "cst 360",
+      "matrix", "iu", "noc", "sls", "pop", "sync", "cpe", "mac", "ip", "dns", "dhcp",
+      "bras", "option pack", "quota", "package", "subscription", "installation",
+      "migration", "ftth", "router", "filter", "rosseta", "rj11", "rj45",
+      "matrix tool", "hdm", "port", "main wire", "outlet", "billing", "suspend",
+      "admin", "contract", "order", "activation", "renewal", "refund", "cancel",
+      "change phone number", "change package", "mobile number", "email", "ownership",
+      "call barring", "salfny", "vas", "msan", "tdm", "major fault", "support",
+      "escalate", "follow up", "delay", "sla", "ticket", "sr", "tt"
+    ];
+
     const questions = [
       {
         id: 1,
@@ -4775,11 +5179,223 @@
     answer: "Mobile number and Email",
 },
 
+{
+    id: 455,
+    text: "In case CST has the ticket Wrong CST 360 or Matrix Profile with status waiting for IT SLA will be",
+    image: "",
+    options: [],
+    answer: "72 H",
+},
+{
+    id: 456,
+    text: "Line is TDM, We can Check if MAC is learned or not from",
+    image: "",
+    options: [],
+    answer: "Matrix",
+},
+{
+    id: 457,
+    text: "In Case problem is solved after enable WLAN button , so the right SR :",
+    image: "",
+    options: [],
+    answer: "FBB Tech Problem > Wireless > Enable WLAN Button",
+},
+{
+    id: 458,
+    text: "Logical instability (multiple login) less than or equal 3 min solved by Reset & Re-configure right SR will be",
+    image: "",
+    options: [],
+    answer: "FBB Tech Problem > Logical Instability - Multiple Logs > Configuration",
+},
+{
+    id: 459,
+    text: "In case CST has logs accepted but has suspended service comment on service name and different account on NST what is the right action :",
+    image: "",
+    options: [],
+    answer: "Configure with right credential",
+},
+{
+    id: 460,
+    text: "CST called want to change PW WIFI and after check system was according this picture , CST has outage CCA right action be:",
+    image: "",
+    options: [],
+    answer: "Will change PW and inform CST about the outage also",
+},
+{
+    id: 461,
+    text: "In case wireless problem is solved without troubleshooting and there is no other technical issue effects on customer's line according to his input/system so right SR",
+    image: "",
+    options: [],
+    answer: "FBB Tech Problem > Wireless > Solved without T.S",
+},
+{
+    id: 462,
+    text: "In case Slowness problem solved after restarting the port , So right SR is :",
+    image: "",
+    options: [],
+    answer: "FBB Tech Problem > Slowness > Restart port",
+},
+{
+    id: 463,
+    text: "CST has ticket with updated (Capacity Planning mail) CCA Right Action",
+    image: "",
+    options: [],
+    answer: "Inform CST OTS SLA",
+},
+{
+    id: 464,
+    text: "Speed Variance Override any Logical case",
+    image: "",
+    options: [],
+    answer: "true",
+},
+{
+    id: 465,
+    text: "Way of communication for Slowness cases",
+    image: "",
+    options: [],
+    answer: "Call or SMS or Recorded message",
+},
+{
+    id: 466,
+    text: "SLA for Escalate logical instability Multiple Login is....",
+    image: "",
+    options: [],
+    answer: "2H",
+},
+{
+    id: 467,
+    text: "After following all required logical verification steps , we found that CST not obtain IP or logs,,, CST has CPE version HG532 next action will be",
+    image: "",
+    options: [],
+    answer: "Ask CST to Restart CPE",
+},
+{
+    id: 468,
+    text: "CST can make change package Before Due Date Via",
+    image: "",
+    options: ["Mobile App or E-Care", "Stores", "Call Center", "All of the above"],
+    answer: "D",
+},
+{
+    id: 469,
+    text: "In-case logical instability (multiple login) more than 3 min next action will be",
+    image: "",
+    options: [],
+    answer: "Reset & Re-configure the CPE",
+},
+{
+    id: 470,
+    text: "It's not mandatory to use HDM Portal in Reset, Restart & Configure WLAN",
+    image: "",
+    options: [],
+    answer: "False",
+},
+{
+    id: 471,
+    text: "In case CST follow on Planned Outage passed the estimated time still exists on 360 CCA will",
+    image: "",
+    options: [],
+    answer: "Handle case normally",
+},
+{
+    id: 472,
+    text: "In case if MAC is learned and Asked customer if there is any changes on CPE configurations and his respond was he visit our CSO and make reset and reconfiguration there,,, CCA next step is..",
+    image: "",
+    options: [],
+    answer: "Escalate to NOC",
+},
 
     ];
 
     let filteredQuestions = [...questions];
-    let isLoading = false;
+    let activeKeywords = new Set();
+    let isFilterExpanded = false;
+
+    // Initialize keywords grid
+    function initializeKeywords() {
+      const keywordsGrid = document.getElementById('keywordsGrid');
+      keywordsGrid.innerHTML = keywords.map(keyword => `
+        <div class="keyword-tag" onclick="toggleKeyword('${keyword}')" data-keyword="${keyword}">
+          ${keyword}
+        </div>
+      `).join('');
+    }
+
+    // Toggle filter section
+    function toggleFilter() {
+      const filterContent = document.getElementById('filterContent');
+      const filterToggle = document.getElementById('filterToggle');
+      
+      isFilterExpanded = !isFilterExpanded;
+      
+      if (isFilterExpanded) {
+        filterContent.classList.add('expanded');
+        filterToggle.textContent = '−';
+        filterToggle.style.transform = 'rotate(180deg)';
+      } else {
+        filterContent.classList.remove('expanded');
+        filterToggle.textContent = '+';
+        filterToggle.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // Toggle keyword filter
+    function toggleKeyword(keyword) {
+      const keywordElement = document.querySelector(`[data-keyword="${keyword}"]`);
+      
+      if (activeKeywords.has(keyword)) {
+        activeKeywords.delete(keyword);
+        keywordElement.classList.remove('active');
+      } else {
+        activeKeywords.add(keyword);
+        keywordElement.classList.add('active');
+      }
+      
+      updateActiveFilters();
+      filterQuestions();
+    }
+
+    // Remove specific filter
+    function removeFilter(keyword) {
+      activeKeywords.delete(keyword);
+      const keywordElement = document.querySelector(`[data-keyword="${keyword}"]`);
+      if (keywordElement) {
+        keywordElement.classList.remove('active');
+      }
+      updateActiveFilters();
+      filterQuestions();
+    }
+
+    // Clear all filters
+    function clearAllFilters() {
+      activeKeywords.clear();
+      document.querySelectorAll('.keyword-tag').forEach(el => {
+        el.classList.remove('active');
+      });
+      document.getElementById('searchInput').value = '';
+      updateActiveFilters();
+      filterQuestions();
+    }
+
+    // Update active filters display
+    function updateActiveFilters() {
+      const activeFiltersSection = document.getElementById('activeFilters');
+      const activeFiltersList = document.getElementById('activeFiltersList');
+      
+      if (activeKeywords.size === 0) {
+        activeFiltersSection.style.display = 'none';
+        return;
+      }
+      
+      activeFiltersSection.style.display = 'block';
+      activeFiltersList.innerHTML = Array.from(activeKeywords).map(keyword => `
+        <div class="active-filter-tag">
+          ${keyword}
+          <button class="remove-filter" onclick="removeFilter('${keyword}')">×</button>
+        </div>
+      `).join('');
+    }
 
     function highlightText(text, search) {
       if (!search) return text;
@@ -4839,16 +5455,28 @@
     function filterQuestions() {
       const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
 
-      if (!searchTerm) {
-        filteredQuestions = [...questions];
-      } else {
-        filteredQuestions = questions.filter(q => 
-          q.text.toLowerCase().includes(searchTerm) ||
-          q.options.some(opt => opt.toLowerCase().includes(searchTerm)) ||
-          q.answer.toLowerCase().includes(searchTerm)
-        );
+      // Start with all questions
+      let filtered = [...questions];
+
+      // Apply keyword filters first
+      if (activeKeywords.size > 0) {
+        filtered = filtered.filter(q => {
+          const questionContent = (q.text + ' ' + q.options.join(' ') + ' ' + q.answer).toLowerCase();
+          return Array.from(activeKeywords).some(keyword => 
+            questionContent.includes(keyword.toLowerCase())
+          );
+        });
       }
 
+      // Apply search term filter (case-insensitive)
+      if (searchTerm) {
+        filtered = filtered.filter(q => {
+          const questionContent = (q.text + ' ' + q.options.join(' ') + ' ' + q.answer).toLowerCase();
+          return questionContent.includes(searchTerm);
+        });
+      }
+
+      filteredQuestions = filtered;
       updateQuestionCount();
       renderQuestions(filteredQuestions);
     }
@@ -4857,7 +5485,7 @@
     let searchTimeout;
     function debouncedSearch() {
       clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(filterQuestions, 300);
+      searchTimeout = setTimeout(filterQuestions, 200);
     }
 
     // Event listeners
@@ -4865,6 +5493,7 @@
     
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
+      initializeKeywords();
       updateQuestionCount();
       renderQuestions(questions);
       
@@ -4887,7 +5516,75 @@
         searchInput.blur();
         filterQuestions();
       }
+      
+      // Toggle filter with spacebar when not in input
+      if (e.key === ' ' && document.activeElement !== document.getElementById('searchInput')) {
+        e.preventDefault();
+        toggleFilter();
+      }
     });
+
+    // Improve mobile touch experience
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    document.addEventListener('touchstart', function(e) {
+      touchStartY = e.changedTouches[0].screenY;
+    }, {passive: true});
+
+    document.addEventListener('touchend', function(e) {
+      touchEndY = e.changedTouches[0].screenY;
+      // Prevent zoom on double tap for specific elements
+      if (e.target.classList.contains('keyword-tag') || e.target.classList.contains('search-box')) {
+        e.preventDefault();
+      }
+    }, {passive: false});
+
+    // Add haptic feedback for mobile (if supported)
+    function addHapticFeedback() {
+      if ('vibrate' in navigator) {
+        navigator.vibrate(50);
+      }
+    }
+
+    // Enhanced keyword selection with haptic feedback
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('keyword-tag')) {
+        addHapticFeedback();
+      }
+    });
+
+    // Auto-hide filter on mobile after selection
+    let autoHideTimeout;
+    function autoHideFilter() {
+      if (window.innerWidth <= 768 && isFilterExpanded) {
+        clearTimeout(autoHideTimeout);
+        autoHideTimeout = setTimeout(() => {
+          if (activeKeywords.size > 0) {
+            toggleFilter();
+          }
+        }, 2000);
+      }
+    }
+
+    // Trigger auto-hide when keyword is selected on mobile
+    document.querySelectorAll('.keyword-tag').forEach(tag => {
+      tag.addEventListener('click', autoHideFilter);
+    });
+
+    // Optimize scroll performance
+    let ticking = false;
+    function updateScrollPerformance() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          // Optimize animations during scroll
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', updateScrollPerformance, {passive: true});
   </script>
 </body>
 </html>
